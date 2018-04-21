@@ -1,0 +1,17 @@
+{% load staticfiles %}
+
+<ul class="notification-menu">
+    <li>
+        <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+            <img src="{% static '/images/photos/user-avatar.png' %}" alt=""/>
+            <img src="{#% media '/users_avatars/user-avatar.png' %#}" alt=""/>
+            {{ user }}
+            <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-usermenu pull-right">
+            <li><a href="#"><i class="fa fa-user"></i> Профіль</a></li>
+            <li><a href="#"><i class="fa fa-cog"></i> Налаштування</a></li>
+            <li><a href="{% url 'auth:logout' %}"><i class="fa fa-sign-out"></i> Вихід</a></li>
+        </ul>
+    </li>
+</ul>
