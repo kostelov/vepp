@@ -6,7 +6,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="keywords"
+          content="admin, dashboard, bootstrap, template, flat, modern, theme, responsive, fluid, retina, backend, html5, css, css3">
     <meta name="description" content="">
+    <meta name="author" content="ThemeBucket">
     <link rel="shortcut icon" href="#" type="image/png">
 
     <title>
@@ -42,11 +45,11 @@
 
         <!--logo and iconic logo start-->
         <div class="logo">
-            <a href="{% url 'main' %}"><img src="{% static '/images/logo.png' %}" alt=""></a>
+            <a href="#"><img src="{% static '/images/logo.png' %}" alt=""></a>
         </div>
 
         <div class="logo-icon text-center">
-            <a href="{% url 'main' %}"><img src="{% static '/images/logo_icon.png' %}" alt=""></a>
+            <a href="#"><img src="{% static '/images/logo_icon.png' %}" alt=""></a>
         </div>
         <!--logo and iconic logo end-->
 
@@ -71,8 +74,6 @@
             </div>
 
             <!--sidebar nav start-->
-            {% include 'mainapp/includes/inc_left_menu.html' %}
-            <!--sidebar nav end-->
         </div>
 
     </div>
@@ -105,16 +106,15 @@
 
         <!-- page heading start -->
         <div class="page-heading">
-            <!-- раскоментировать при использовании на странице и добавить include -->
-            <h3>{{ title }}</h3>
-            {% block breadcrumbs %}
-            <ul class="breadcrumb">
-                <li>
-                    <a href="{% url 'main' %}">Головна</a>
-                </li>
-                <!--<li class="active">Directory Page</li>-->
-            </ul>
-            {% endblock %}
+            <h3>
+                {{ title }}
+            </h3>
+            <!--<ul class="breadcrumb">-->
+                <!--<li>-->
+                    <!--<a href="#">Користувачі</a>-->
+                <!--</li>-->
+                <!--<li class="active">Список користувачів </li>-->
+            <!--</ul>-->
         </div>
         <!-- page heading end -->
 

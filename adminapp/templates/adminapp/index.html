@@ -1,0 +1,44 @@
+{% extends 'mainapp/base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+    {{ block.super }} / {{ title }}
+{% endblock %}
+
+{% block breadcrumbs %}
+
+    <ul class="breadcrumb">
+        <li>
+            {{ block.super }}
+        </li>
+        <li><a href="{% url 'admin' %}">Адміністрування</a></li>
+        <!--<li class="active">Directory Page</li>-->
+    </ul>
+{% endblock %}
+
+{% block container %}
+<div class="wrapper widgets">
+    <div class="row">
+        <div class="row states-info">
+            <a href="{% url 'admin:users' %}">
+            <div class="col-md-3">
+                <div class="panel">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <i class="fa fa-users"></i>
+                            </div>
+                            <div class="col-xs-8">
+                                <!--<span class="state-title">  </span>-->
+                                <h4>Користувачі - {{ object }}</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

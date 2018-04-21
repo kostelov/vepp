@@ -16,9 +16,9 @@ def login(request):
             username = request.POST['username']
             password = request.POST['password']
             user = auth.authenticate(request, username=username, password=password)
-            if user and user.is_active:
+            if user and user.is_active and user.is_superuser:
                 auth.login(request, user)
-                return HttpResponseRedirect(reverse('main'))
+                return HttpResponseRedirect(reverse('admin'))
             else:
                 return HttpResponseRedirect(reverse('main'))
 

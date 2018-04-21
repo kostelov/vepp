@@ -1,0 +1,73 @@
+{% extends 'adminapp/index.html' %}
+{% load staticfiles %}
+
+{% block title %}
+    {{ block.super }} / {{ title }}
+{% endblock %}
+
+{% block breadcrumbs %}
+
+    <ul class="breadcrumb">
+        <li>
+            {{ block.super }}
+        </li>
+        <li><a href="{% url 'admin:users' %}">Користувачі</a></li>
+        <!--<li class="active">Directory Page</li>-->
+    </ul>
+{% endblock %}
+
+{% block container %}
+<div class="directory-info-row">
+    <div class="row">
+        <div class="col-lg-3 col-sm-6">
+            <div class="panel">
+                <div class="panel-body">
+                    {% for object in object_list %}
+                    <h4>{{ object.last_name }} {{ object.first_name }}</h4>
+                    <div class="media">
+                        <a class="pull-left" href="#">
+                            <img class="thumb media-object" src="{% static '/images/photos/user-avatar.png' %}" alt="">
+                        </a>
+                        <div class="media-body">
+                            <address>
+                                <strong>
+                                    {% if object.is_superuser %}Адміністратор
+                                    {% elif object.is_dir %}Керівник
+                                    {% elif object.is_assistant %}Помічник
+                                    {% else %}Працівник
+                                    {% endif %}
+                                </strong><br>
+                                Реєсрація: {{ object.date_joined }}<br>
+                                Вхід: {{ object.last_login }}<br>
+                                <i class="fa fa-calendar" title="дата народження"></i> : {{ object.date_of_birth }}<br>
+                                <i class="fa fa-phone fa-lg"></i> : (123) 456-7890
+                            </address>
+                            <ul class="nav nav-pills p-option">
+                                <li>
+                                    <a href="#"><i class="fa fa-edit" title="Редагувати"></i></a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-eye" title="Переглянути"></i></a>
+                                </li>
+                                <li>
+                                    {% if not object.is_superuser %}
+                                    <a href="#"><i class="fa fa-trash" title="Видалити"></i></a>
+                                    {% endif %}
+                                </li>
+                                <!--<li><a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href=""-->
+                                       <!--data-original-title="Twitter"><i class="fa fa-twitter"></i></a></li>-->
+                                <!--<li><a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href=""-->
+                                       <!--data-original-title="LinkedIn"><i class="fa fa-linkedin"></i></a></li>-->
+                                <!--<li><a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href=""-->
+                                       <!--data-original-title="Skype"><i class="fa fa-skype"></i></a></li>-->
+                            </ul>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
