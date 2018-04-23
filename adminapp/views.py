@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponseRedirect
+from django.shortcuts import render, HttpResponseRedirect, get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import user_passes_test
@@ -50,6 +50,18 @@ def user_create_view(request):
         'form': form,
     }
     return render(request, 'adminapp/user_create.html', context)
+
+
+@user_passes_test(lambda user: user.is_superuser)
+def user_detail_view(request, user_pk):
+    title = 'Профіль користувача'
+    user = get_object_or_404(ProjectUser, pk=user_pk)
+
+    context = {
+        'title': title,
+        'object': user,
+    }
+    return render(request, 'adminapp/user_detail.html', context)
 # class UserListView(ListView):
 #     model = ProjectUser
 #     template_name = 'adminapp/users_list.html'

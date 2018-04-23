@@ -20,7 +20,7 @@
 <div class="directory-info-row">
     <div class="row">
         {% for object in object_list %}
-        <div class="col-lg-3 col-sm-6">
+        <div class="col-lg-4 col-sm-6">
             <div class="panel">
                 <div class="panel-body">
 
@@ -38,12 +38,7 @@
                                     {% else %}Працівник
                                     {% endif %}
                                 </strong><br>
-                                Реєсрація: {{ object.date_joined }}<br>
-                                Вхід: {% if object.last_login == None %}
-                                    поки не заходив
-                                {% else %}
-                                    {{ object.last_login }}
-                                {% endif %}<br>
+                                Реєстрація:<br> {{ object.date_joined }}<br>
                                 <i class="fa fa-calendar" title="дата народження"></i> : {{ object.date_of_birth }}<br>
                                 <i class="fa fa-phone fa-lg"></i> : (123) 456-7890
                             </address>
@@ -52,7 +47,9 @@
                                     <a href="#"><i class="fa fa-edit" title="Редагувати"></i></a>
                                 </li>
                                 <li>
-                                    <a href="#"><i class="fa fa-eye" title="Переглянути"></i></a>
+                                    <a href="{% url 'admin:user_detail' object.pk %}">
+                                        <i class="fa fa-eye" title="Переглянути"></i>
+                                    </a>
                                 </li>
                                 <li>
                                     {% if not object.is_superuser %}

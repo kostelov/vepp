@@ -1,0 +1,121 @@
+{% extends 'adminapp/users_list.html' %}
+{% load staticfiles %}
+
+{% block title %}
+    {{ block.super }} / {{ title }}
+{% endblock %}
+
+{% block breadcrumbs %}
+    <ul class="breadcrumb">
+        <li>
+            {{ block.super }}
+        </li>
+        <li><a href="{% url 'admin:user_detail' object.pk %}">Профіль</a></li>
+    </ul>
+{% endblock %}
+
+{% block container %}
+<div class="row">
+    <div class="col-md-3">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel">
+                    <div class="panel-body">
+                        <div class="profile-pic text-center">
+                            <img src="{% static '/images/photos/user-avatar.png' %}" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                    <div class="panel">
+                        <div class="panel-body">
+                            <ul class="p-info">
+                                <li>
+                                    <div class="title">Ім'я</div>
+                                    <div class="desk">{{ object.first_name }}</div>
+                                </li>
+                                <li>
+                                    <div class="title">Тип профілю</div>
+                                    <div class="desk">
+                                        {% if object.is_superuser %}Адміністратор
+                                        {% elif object.is_dir %}Керівник
+                                        {% elif object.is_assistant %}Помічник
+                                        {% else %}Працівник
+                                        {% endif %}
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="title">Логін</div>
+                                    <div class="desk">{{ object.username }}</div>
+                                </li>
+                                <li>
+                                    <div class="title">Дата реєстрації</div>
+                                    <div class="desk">{{ object.date_joined }}</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="panel">
+                    <div class="panel-body">
+                        <ul class="p-info">
+                            <li>
+                                <div class="title">Ім'я</div>
+                                <div class="desk">{{ object.first_name }}</div>
+                            </li>
+                            <li>
+                                <div class="title">Прізвище</div>
+                                <div class="desk">{{ object.last_name }}</div>
+                            </li>
+                            <li>
+                                <div class="title">По-батькові</div>
+                                <div class="desk">{{ object.parent_name }}</div>
+                            </li>
+                            <li>
+                                <div class="title">e-mail</div>
+                                <div class="desk">{{ object.email }}</div>
+                            </li>
+                            <li>
+                                <div class="title">Телефон</div>
+                                <div class="desk">{{ object.phone1 }}</div>
+                                <div class="desk">{{ object.phone2 }}</div>
+                            </li>
+                            <li>
+                                <div class="title">Дата народження</div>
+                                <div class="desk">{{ object.date_of_birth }}</div>
+                            </li>
+                            <li>
+                                <div class="title">Обліковий запис</div>
+                                <div class="desk">
+                                    {% if object.is_active == True %}
+                                        Включений
+                                    {% else %}
+                                        Відключений
+                                    {% endif %}
+                                </div>
+                            </li>
+                            <li>
+                                <div class="title">Останній вхід в систему</div>
+                                <div class="desk">
+                                    {% if object.last_login == None %}
+                                    жодного разу
+                                    {% else %}
+                                    {{ object.last_login }}
+                                    {% endif %}
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

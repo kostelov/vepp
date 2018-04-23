@@ -18,7 +18,7 @@ def login(request):
             user = auth.authenticate(request, username=username, password=password)
             if user and user.is_active and user.is_superuser:
                 auth.login(request, user)
-                return HttpResponseRedirect(reverse('admin'))
+                return HttpResponseRedirect(reverse('admin:admin'))
             elif user and user.is_active:
                 auth.login(request, user)
                 return HttpResponseRedirect(reverse('main'))
