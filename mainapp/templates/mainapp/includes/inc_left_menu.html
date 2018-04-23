@@ -7,6 +7,9 @@
             <li class="{% if request.resolver_match.url_name == 'users' %} active {% endif %}">
                 <a href="{% url 'admin:users' %}"> Користувачі</a>
             </li>
+            <li class="{% if request.resolver_match.url_name == 'user_create' %} active {% endif %}">
+                <a href="{% url 'admin:user_create' %}"> Новий користувач</a>
+            </li>
             <!--<li><a href="index.html"> Dashboard 2</a></li>-->
         </ul>
     </li>

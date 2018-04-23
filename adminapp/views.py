@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import user_passes_test
 from django.views.generic.list import ListView
 
 from authapp.models import ProjectUser
+from authapp.forms import UserRegisterForm
 
 
 @user_passes_test(lambda user: user.is_superuser)
@@ -30,6 +31,25 @@ def users_list_view(request):
     }
     return render(request, 'adminapp/users_list.html', context)
 
+
+@user_passes_test(lambda user: user.is_superuser)
+def user_create_view(request):
+    title = 'Новий користувач'
+    form = UserRegisterForm()
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST, request.FILES)
+        if form.is_valid():
+            try:
+                form.save()
+                return HttpResponseRedirect(reverse('admin:users'))
+            except ValueError:
+                pass
+
+    context = {
+        'title': title,
+        'form': form,
+    }
+    return render(request, 'adminapp/user_create.html', context)
 # class UserListView(ListView):
 #     model = ProjectUser
 #     template_name = 'adminapp/users_list.html'
