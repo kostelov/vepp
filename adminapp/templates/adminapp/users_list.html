@@ -11,7 +11,7 @@
         <li>
             {{ block.super }}
         </li>
-        <li><a href="{% url 'admin:users' %}">Користувачі</a></li>
+        <li><a href="{% url 'admin:users' %}">{{ title }}</a></li>
         <!--<li class="active">Directory Page</li>-->
     </ul>
 {% endblock %}
@@ -40,11 +40,13 @@
                                 </strong><br>
                                 Реєстрація:<br> {{ object.date_joined }}<br>
                                 <i class="fa fa-calendar" title="дата народження"></i> : {{ object.date_of_birth }}<br>
-                                <i class="fa fa-phone fa-lg"></i> : (123) 456-7890
+                                <i class="fa fa-phone fa-lg"></i> : {{ object.phone1 }}
                             </address>
                             <ul class="nav nav-pills p-option">
                                 <li>
-                                    <a href="#"><i class="fa fa-edit" title="Редагувати"></i></a>
+                                    <a href="{% url 'admin:user_update' object.pk %}">
+                                        <i class="fa fa-edit" title="Редагувати"></i>
+                                    </a>
                                 </li>
                                 <li>
                                     <a href="{% url 'admin:user_detail' object.pk %}">

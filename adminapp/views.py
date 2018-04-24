@@ -5,9 +5,10 @@ from django.contrib.auth.decorators import user_passes_test
 from django.views.generic.list import ListView
 
 from authapp.models import ProjectUser
-from authapp.forms import UserRegisterForm
+from authapp.forms import UserRegisterForm, UserAdminUpdateForm
 
 
+# админка
 @user_passes_test(lambda user: user.is_superuser)
 def main_view(request):
     title = 'Адміністрування'
@@ -20,6 +21,7 @@ def main_view(request):
     return render(request, 'adminapp/index.html', context)
 
 
+# просмотр списка зарегестрированных пользователей
 @user_passes_test(lambda user: user.is_superuser)
 def users_list_view(request):
     title = 'Користувачі'
@@ -32,6 +34,7 @@ def users_list_view(request):
     return render(request, 'adminapp/users_list.html', context)
 
 
+# создание пользователя
 @user_passes_test(lambda user: user.is_superuser)
 def user_create_view(request):
     title = 'Новий користувач'
@@ -52,6 +55,7 @@ def user_create_view(request):
     return render(request, 'adminapp/user_create.html', context)
 
 
+# просмотр детальной информации о пользователе
 @user_passes_test(lambda user: user.is_superuser)
 def user_detail_view(request, user_pk):
     title = 'Профіль користувача'
@@ -62,6 +66,27 @@ def user_detail_view(request, user_pk):
         'object': user,
     }
     return render(request, 'adminapp/user_detail.html', context)
+
+@user_passes_test(lambda user: user.is_superuser)
+def user_update_view(request, user_pk):
+    title = 'Редагувати профіль'
+    user = get_object_or_404(ProjectUser, pk=user_pk)
+    if user:
+        if request.method == 'POST':
+            form = UserAdminUpdateForm(request.POST, request.FILES, instance=user)
+            if form.is_valid():
+                form.save()
+                return HttpResponseRedirect(reverse('admin:users'))
+        else:
+            form = UserAdminUpdateForm(instance=user)
+
+        context = {
+            'title': title,
+            'form': form,
+            'object': user,
+        }
+        return render(request, 'adminapp/user_update.html', context)
+
 # class UserListView(ListView):
 #     model = ProjectUser
 #     template_name = 'adminapp/users_list.html'
