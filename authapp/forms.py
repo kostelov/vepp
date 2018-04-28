@@ -39,6 +39,11 @@ class UserAdminUpdateForm(UserChangeForm):
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control'
             field.help_text = ''
+            if field_name == 'avatar':
+                # field.widget = forms.HiddenInput()
+                field.widget.attrs['class'] = 'default'
+            if field_name == 'is_active':
+                field.widget.attrs['style'] = 'position: absolute; opacity: 0;'
             if field_name == 'password':
                 field.widget = forms.HiddenInput()
 

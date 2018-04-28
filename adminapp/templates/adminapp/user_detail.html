@@ -1,5 +1,6 @@
 {% extends 'adminapp/users_list.html' %}
 {% load staticfiles %}
+{% load tags %}
 
 {% block title %}
     {{ block.super }} / {{ title }}
@@ -22,7 +23,8 @@
                 <div class="panel">
                     <div class="panel-body">
                         <div class="profile-pic text-center">
-                            <img src="{% static '/images/photos/user-avatar.png' %}" alt="">
+                            <img src="{{ object.avatar|default_avatar }}" style="max-width: 200px; max-height: 200px;"
+                                 alt="">
                         </div>
                     </div>
                 </div>

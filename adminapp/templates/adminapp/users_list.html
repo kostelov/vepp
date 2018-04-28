@@ -1,5 +1,6 @@
 {% extends 'adminapp/index.html' %}
 {% load staticfiles %}
+{% load tags %}
 
 {% block title %}
     {{ block.super }} / {{ title }}
@@ -26,8 +27,9 @@
 
                     <h4>{{ object.last_name }} {{ object.first_name }}</h4>
                     <div class="media">
-                        <a class="pull-left" href="#">
-                            <img class="thumb media-object" src="{% static '/images/photos/user-avatar.png' %}" alt="">
+                        <a class="pull-left" href="{% url 'admin:user_detail' object.pk %}">
+                            <img class="thumb media-object" src="{{ object.avatar|default_avatar }}"
+                                 style="max-width: 100px; max-height: 100px;" alt="">
                         </a>
                         <div class="media-body">
                             <address>

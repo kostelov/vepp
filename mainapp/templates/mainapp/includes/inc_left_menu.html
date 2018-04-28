@@ -2,8 +2,11 @@
 
 <ul class="nav nav-pills nav-stacked custom-nav">
     {% if user.is_superuser %}
-    <li class="menu-list nav-active"><a href="#"><i class="fa fa-home"></i> <span>Панель керування</span></a>
+    <li class="menu-list nav-active"><a href="#"><i class="fa fa-home"></i> <span>Адміністрування</span></a>
         <ul class="sub-menu-list">
+            <li class="{% if request.resolver_match.url_name == 'admin' %} active {% endif %}">
+                <a href="{% url 'admin:admin' %}"> Панель керування</a>
+            </li>
             <li class="{% if request.resolver_match.url_name == 'users' %} active {% endif %}">
                 <a href="{% url 'admin:users' %}"> Користувачі</a>
             </li>

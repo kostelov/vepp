@@ -1,10 +1,11 @@
 {% load staticfiles %}
+{% load tags %}
 
 <ul class="notification-menu">
     <li>
         <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-            <img src="{% static '/images/photos/user-avatar.png' %}" alt=""/>
-            <img src="{#% media '/users_avatars/user-avatar.png' %#}" alt=""/>
+            <img src="{#% static '/images/photos/user-avatar.png' %#}" alt=""/>
+            <img src="{{ user.avatar|default_avatar }}" alt=""/>
             {{ user }}
             <span class="caret"></span>
         </a>

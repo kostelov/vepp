@@ -11,7 +11,7 @@
 
     <title>
         {% block title %}
-        ЕкоПроект
+        Вепп
         {% endblock %}
     </title>
 
@@ -25,9 +25,23 @@
 
     <!--icheck-->
     <link href="{% static '/js/iCheck/skins/minimal/minimal.css' %}" rel="stylesheet">
+    <link href="{% static '/js/iCheck/skins/minimal/red.css' %}" rel="stylesheet">
+    <link href="{% static '/js/iCheck/skins/minimal/green.css' %}" rel="stylesheet">
+    <link href="{% static '/js/iCheck/skins/minimal/blue.css' %}" rel="stylesheet">
+    <link href="{% static '/js/iCheck/skins/minimal/yellow.css' %}" rel="stylesheet">
+    <link href="{% static '/js/iCheck/skins/minimal/purple.css' %}" rel="stylesheet">
     <link href="{% static '/js/iCheck/skins/square/square.css' %}" rel="stylesheet">
     <link href="{% static '/js/iCheck/skins/square/red.css' %}" rel="stylesheet">
     <link href="{% static '/js/iCheck/skins/square/blue.css' %}" rel="stylesheet">
+    <link href="{% static '/js/iCheck/skins/square/green.css' %}" rel="stylesheet">
+    <link href="{% static '/js/iCheck/skins/square/yellow.css' %}" rel="stylesheet">
+    <link href="{% static '/js/iCheck/skins/square/purple.css' %}" rel="stylesheet">
+    <link href="{% static '/js/iCheck/skins/flat/grey.css' %}" rel="stylesheet">
+    <link href="{% static '/js/iCheck/skins/flat/red.css' %}" rel="stylesheet">
+    <link href="{% static '/js/iCheck/skins/flat/green.css' %}" rel="stylesheet">
+    <link href="{% static '/js/iCheck/skins/flat/blue.css' %}" rel="stylesheet">
+    <link href="{% static '/js/iCheck/skins/flat/yellow.css' %}" rel="stylesheet">
+    <link href="{% static '/js/iCheck/skins/flat/purple.css' %}" rel="stylesheet">
 
     <!--dashboard calendar-->
     <link href="{% static '/css/clndr.css' %}" rel="stylesheet">
@@ -175,15 +189,8 @@
         <!--pickers initialization-->
         <script src="{% static '/js/pickers-init.js' %}"></script>
 
-        <!-- jQuery Flot Chart-->
-        <script src="{% static '/js/flot-chart/jquery.flot.js' %}"></script>
-        <script src="{% static '/js/flot-chart/jquery.flot.tooltip.js' %}"></script>
-        <script src="{% static '/js/flot-chart/jquery.flot.resize.js' %}"></script>
-        <script src="{% static '/js/flot-chart/jquery.flot.pie.resize.js' %}"></script>
-        <script src="{% static '/js/flot-chart/jquery.flot.selection.js' %}"></script>
-        <script src="{% static '/js/flot-chart/jquery.flot.stack.js' %}"></script>
-        <script src="{% static '/js/flot-chart/jquery.flot.time.js' %}"></script>
-        <script src="{% static '/js/main-chart.js' %}"></script>
+        <!-- file upload -->
+        <script type="text/javascript" src="{% static '/js/bootstrap-fileupload.min.js' %}"></script>
 
         <!--common scripts for all pages-->
         <script src="{% static '/js/scripts.js' %}"></script>
