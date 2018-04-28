@@ -90,6 +90,7 @@
                                 </div>
                             </div>
                         </div>
+                        {% if user.is_superuser %}
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">{{ form.is_active.label_tag }}</label>
@@ -113,31 +114,32 @@
                                     </div>
                                 </div>
                             </div>
-                            </div>
+                        </div>
                         <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">{{ form.is_assistant.label_tag }}</label>
-                            <div class="col-sm-9 icheck">
-                                <div class="flat-green single-row">
-                                    <div class="radio">
-                                        {{ form.is_assistant }}
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">{{ form.is_assistant.label_tag }}</label>
+                                <div class="col-sm-9 icheck">
+                                    <div class="flat-green single-row">
+                                        <div class="radio">
+                                            {{ form.is_assistant }}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                            </div>
                         <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">{{ form.is_client.label_tag }}</label>
-                            <div class="col-sm-9 icheck">
-                                <div class="flat-green single-row">
-                                    <div class="radio">
-                                        {{ form.is_client }}
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">{{ form.is_client.label_tag }}</label>
+                                <div class="col-sm-9 icheck">
+                                    <div class="flat-green single-row">
+                                        <div class="radio">
+                                            {{ form.is_client }}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        </div>
+                        {% endif %}
                         <div class="form-group last">
                             <label class="control-label col-lg-2">{{ form.avatar.label_tag }}</label>
                             <div class="col-md-9">

@@ -10,7 +10,7 @@
             <span class="caret"></span>
         </a>
         <ul class="dropdown-menu dropdown-menu-usermenu pull-right">
-            <li><a href="#"><i class="fa fa-user"></i> Профіль</a></li>
+            <li><a href="{% url 'admin:user_update' user.pk %}"><i class="fa fa-user"></i> Профіль</a></li>
             <li><a href="#"><i class="fa fa-cog"></i> Налаштування</a></li>
             <li><a href="{% url 'auth:logout' %}"><i class="fa fa-sign-out"></i> Вихід</a></li>
         </ul>

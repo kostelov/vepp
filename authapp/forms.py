@@ -1,7 +1,7 @@
 import re
 
 from django import forms
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm, PasswordChangeForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm, AdminPasswordChangeForm
 from authapp.models import ProjectUser
 
 
@@ -56,3 +56,15 @@ class UserAdminUpdateForm(UserChangeForm):
             raise forms.ValidationError('Укажите номер в международном формате')
         else:
             return data
+
+
+class UserPassChangeForm(AdminPasswordChangeForm):
+    class Meta:
+        model = ProjectUser
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(UserPassChangeForm, self).__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
+            field.help_text = ''

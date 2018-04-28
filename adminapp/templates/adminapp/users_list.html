@@ -23,8 +23,7 @@
         {% for object in object_list %}
         <div class="col-lg-4 col-sm-6">
             <div class="panel">
-                <div class="panel-body">
-
+                <div class="panel-body" style="{% if not object.is_active %}opacity: 0.3{% endif %}">
                     <h4>{{ object.last_name }} {{ object.first_name }}</h4>
                     <div class="media">
                         <a class="pull-left" href="{% url 'admin:user_detail' object.pk %}">
@@ -57,7 +56,22 @@
                                 </li>
                                 <li>
                                     {% if not object.is_superuser %}
-                                    <a href="#"><i class="fa fa-trash" title="Видалити"></i></a>
+                                    <a href="{% url 'admin:user_change_password' object.pk %}">
+                                        <i class="fa fa-key" title="Змінити пароль"></i>
+                                    </a>
+                                    {% endif %}
+                                </li>
+                                <li>
+                                    {% if not object.is_superuser %}
+                                        {% if object.is_active %}
+                                            <a href="{% url 'admin:user_delete' object.pk %}">
+                                                <i class="fa fa-times" title="Деактивувати"></i>
+                                            </a>
+                                        {% else %}
+                                            <a href="{% url 'admin:user_activate' object.pk %}">
+                                                <i class="fa fa-check" title="Активувати"></i>
+                                            </a>
+                                        {% endif %}
                                     {% endif %}
                                 </li>
                                 <!--<li><a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href=""-->
