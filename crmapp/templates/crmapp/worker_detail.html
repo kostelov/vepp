@@ -1,4 +1,4 @@
-{% extends 'crmapp/workers_list.html' %}
+{% extends 'mainapp/base.html' %}
 {% load staticfiles %}
 {% load tags %}
 
@@ -6,14 +6,14 @@
     {{ block.super }} / {{ title }}
 {% endblock %}
 
-{% block breadcrumbs %}
-    <ul class="breadcrumb">
-        <li>
-            {{ block.super }}
-        </li>
-        <li><a href="{% url 'crm:worker_detail' object.pk %}">{{ object.last_name }} {{ object.first_name }}</a></li>
-    </ul>
-{% endblock %}
+<!--{% block breadcrumbs %}-->
+    <!--<ul class="breadcrumb">-->
+        <!--<li>-->
+            <!--{{ block.super }}-->
+        <!--</li>-->
+        <!--<li><a href="{% url 'crm:worker_detail' object.pk %}">{{ object.last_name }} {{ object.first_name }}</a></li>-->
+    <!--</ul>-->
+<!--{% endblock %}-->
 
 {% block container %}
 <div class="row">

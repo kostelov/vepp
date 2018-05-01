@@ -43,16 +43,19 @@
                                 <i class="fa fa-phone fa-lg"></i> : {{ object.phone1 }}
                             </address>
                             <ul class="nav nav-pills p-option">
+                                {% if not object.is_superuser %}
                                 <li>
                                     <a href="{% url 'admin:user_update' object.pk %}">
                                         <i class="fa fa-edit" title="Редагувати"></i>
                                     </a>
                                 </li>
+                                {% endif %}
                                 <li>
                                     <a href="{% url 'admin:user_detail' object.pk %}">
                                         <i class="fa fa-eye" title="Переглянути"></i>
                                     </a>
                                 </li>
+                                {% if user.is_superuser %}
                                 <li>
                                     {% if not object.is_superuser %}
                                     <a href="{% url 'admin:user_change_password' object.pk %}">
@@ -73,6 +76,7 @@
                                         {% endif %}
                                     {% endif %}
                                 </li>
+                                {% endif %}
                             </ul>
                         </div>
                     </div>

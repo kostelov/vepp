@@ -1,4 +1,4 @@
-{% extends 'crmapp/workers_list.html' %}
+{% extends 'mainapp/base.html' %}
 {% load staticfiles %}
 {% load tags %}
 
@@ -6,16 +6,15 @@
     {{ block.super }} / {{ title }}
 {% endblock %}
 
-{% block breadcrumbs %}
+<!--{% block breadcrumbs %}-->
 
-    <ul class="breadcrumb">
-        <li>
-            {{ block.super }}
-        </li>
-        <li><a href="{% url 'crm:worker_update' object.pk%}">{{ object.last_name }} {{ object.first_name }}</a></li>
-        <!--<li class="active">Directory Page</li>-->
-    </ul>
-{% endblock %}
+    <!--<ul class="breadcrumb">-->
+        <!--<li>-->
+            <!--{{ block.super }}-->
+        <!--</li>-->
+        <!--<li><a href="{% url 'crm:worker_update' object.pk%}">{{ object.last_name }} {{ object.first_name }}</a></li>-->
+    <!--</ul>-->
+<!--{% endblock %}-->
 
 {% block container %}
 <div class="row">
@@ -82,56 +81,7 @@
                                 </div>
                             </div>
                         </div>
-                        {#% if user.is_superuser %#}
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">{{ form.is_active.label_tag }}</label>
-                                <div class="col-sm-9 icheck">
-                                    <div class="flat-green single-row">
-                                        <div class="radio">
-                                            {{ form.is_active }}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">{{ form.is_dir.label_tag }}</label>
-                                <div class="col-sm-9 icheck">
-                                    <div class="flat-green single-row">
-                                        <div class="radio">
-                                            {{ form.is_dir }}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">{{ form.is_assistant.label_tag }}</label>
-                                <div class="col-sm-9 icheck">
-                                    <div class="flat-green single-row">
-                                        <div class="radio">
-                                            {{ form.is_assistant }}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">{{ form.is_client.label_tag }}</label>
-                                <div class="col-sm-9 icheck">
-                                    <div class="flat-green single-row">
-                                        <div class="radio">
-                                            {{ form.is_client }}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        {#% endif %#}
+
                         {% if object.pk == user.pk %}
                         <div class="form-group last">
                             <label class="control-label col-lg-2">{{ form.avatar.label_tag }}</label>
@@ -152,6 +102,10 @@
                         <div class="form-group">
                             <div class="col-md-4 col-xs-11">
                                 {{ form.password }}
+                                {{ form.is_active }}
+                                {{ form.is_dir }}
+                                {{ form.is_assistant }}
+                                {{ form.is_client }}
                             </div>
                         </div>
                         <button class="btn btn-primary" type="submit">

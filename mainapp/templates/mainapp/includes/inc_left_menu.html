@@ -6,7 +6,7 @@
         <a href="{% url 'admin:admin' %}"><i class="fa fa-cogs"></i> <span>Адміністрування</span></a>
         <ul class="sub-menu-list">
             <li class="{% if request.resolver_match.url_name == 'admin' %} active {% endif %}">
-                <a href="{% url 'admin:admin' %}"> Панель керування</a>
+                <a href="{% url 'admin:admin' %}"> Адмінпанель</a>
             </li>
             <li class="{% if request.resolver_match.url_name == 'users' %} active {% endif %}">
                 <a href="{% url 'admin:users' %}"> Користувачі</a>
@@ -41,4 +41,4 @@
         </ul>
     </li>
 </ul>
-{{ request.resolver_match.url_name }}
+<!--{{ request.resolver_match.url_name }}-->
