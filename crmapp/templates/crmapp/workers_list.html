@@ -1,4 +1,4 @@
-{% extends 'adminapp/index.html' %}
+{% extends 'mainapp/base.html' %}
 {% load staticfiles %}
 {% load tags %}
 
@@ -12,7 +12,7 @@
         <li>
             {{ block.super }}
         </li>
-        <li><a href="{% url 'admin:users' %}">{{ title }}</a></li>
+        <li><a href="{% url 'crm:workers_list' %}">{{ title }}</a></li>
     </ul>
 {% endblock %}
 
@@ -25,7 +25,7 @@
                 <div class="panel-body" style="{% if not object.is_active %}opacity: 0.3{% endif %}">
                     <h4>{{ object.last_name }} {{ object.first_name }}</h4>
                     <div class="media">
-                        <a class="pull-left" href="{% url 'admin:user_detail' object.pk %}">
+                        <a class="pull-left" href="{% url 'crm:worker_detail' object.pk %}">
                             <img class="thumb media-object" src="{{ object.avatar|default_avatar }}"
                                  style="max-width: 100px; max-height: 100px;" alt="">
                         </a>
@@ -44,34 +44,16 @@
                             </address>
                             <ul class="nav nav-pills p-option">
                                 <li>
-                                    <a href="{% url 'admin:user_update' object.pk %}">
+                                    {% if not object.is_superuser%}
+                                    <a href="{% url 'crm:worker_update' object.pk %}">
                                         <i class="fa fa-edit" title="Редагувати"></i>
                                     </a>
+                                    {% endif %}
                                 </li>
                                 <li>
-                                    <a href="{% url 'admin:user_detail' object.pk %}">
+                                    <a href="{% url 'crm:worker_detail' object.pk %}">
                                         <i class="fa fa-eye" title="Переглянути"></i>
                                     </a>
-                                </li>
-                                <li>
-                                    {% if not object.is_superuser %}
-                                    <a href="{% url 'admin:user_change_password' object.pk %}">
-                                        <i class="fa fa-key" title="Змінити пароль"></i>
-                                    </a>
-                                    {% endif %}
-                                </li>
-                                <li>
-                                    {% if not object.is_superuser %}
-                                        {% if object.is_active %}
-                                            <a href="{% url 'admin:user_delete' object.pk %}">
-                                                <i class="fa fa-times" title="Деактивувати"></i>
-                                            </a>
-                                        {% else %}
-                                            <a href="{% url 'admin:user_activate' object.pk %}">
-                                                <i class="fa fa-check" title="Активувати"></i>
-                                            </a>
-                                        {% endif %}
-                                    {% endif %}
                                 </li>
                             </ul>
                         </div>

@@ -26,6 +26,7 @@ urlpatterns = [
     re_path(r'^$', mainapp.main, name='main'),
     # re_path(r'^main/', include('mainapp.urls', namespace='main')),
     re_path(r'^admin/', include('adminapp.urls', namespace='admin')),
+    re_path(r'^crm/', include('crmapp.urls', namespace='crm')),
     # re_path(r'^admin/', adminapp.main_view, name='admin'),
     # re_path(r'^admin/', admin.site.urls),
 ]

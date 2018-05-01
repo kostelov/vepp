@@ -69,8 +69,7 @@ def user_detail_view(request, user_pk):
 
 
 # редактирование профиля пользователя
-# @user_passes_test(lambda user: user.is_superuser)
-@login_required
+@user_passes_test(lambda user: user.is_superuser)
 def user_update_view(request, user_pk):
     title = 'Редагувати профіль'
     user = get_object_or_404(ProjectUser, pk=user_pk)

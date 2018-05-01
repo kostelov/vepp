@@ -2,7 +2,8 @@
 
 <ul class="nav nav-pills nav-stacked custom-nav">
     {% if user.is_superuser %}
-    <li class="menu-list nav-active"><a href="#"><i class="fa fa-home"></i> <span>Адміністрування</span></a>
+    <li class="menu-list {% if request.resolver_match.namespace == 'admin' %} nav-active {% endif %}">
+        <a href="{% url 'admin:admin' %}"><i class="fa fa-cogs"></i> <span>Адміністрування</span></a>
         <ul class="sub-menu-list">
             <li class="{% if request.resolver_match.url_name == 'admin' %} active {% endif %}">
                 <a href="{% url 'admin:admin' %}"> Панель керування</a>
@@ -13,8 +14,31 @@
             <li class="{% if request.resolver_match.url_name == 'user_create' %} active {% endif %}">
                 <a href="{% url 'admin:user_create' %}"> Новий користувач</a>
             </li>
-            <!--<li><a href="index.html"> Dashboard 2</a></li>-->
         </ul>
     </li>
     {% endif %}
+    <li class="menu-list {% if request.resolver_match.namespace == 'crm' %} nav-active {% endif %}">
+        <a href="#"><i class="fa fa-home"></i> <span>Панель керування</span></a>
+        <ul class="sub-menu-list">
+            <li class="{% if request.resolver_match.url_name == 'main_crm' %} active {% endif %}">
+                <a href="{% url 'crm:main_crm' %}"> Контрагенти</a>
+            </li>
+            <li class="{% if request.resolver_match.url_name == 'users' %} active {% endif %}">
+                <a href="{#% url 'admin:users' %#}"> Договора</a>
+            </li>
+            <li class="{% if request.resolver_match.url_name == 'user_create' %} active {% endif %}">
+                <a href="{#% url 'admin:user_create' %#}"> Рахунки</a>
+            </li>
+            <li class="{% if request.resolver_match.url_name == 'user_create' %} active {% endif %}">
+                <a href="{#% url 'admin:user_create' %#}"> Акти</a>
+            </li>
+            <li class="{% if request.resolver_match.url_name == 'user_create' %} active {% endif %}">
+                <a href="{#% url 'admin:user_create' %#}"> Фірми</a>
+            </li>
+            <li class="{% if request.resolver_match.url_name == 'workers_list' or request.resolver_match.url_name == 'worker_detail' or request.resolver_match.url_name == 'worker_update' %} active {% endif %}">
+                <a href="{% url 'crm:workers_list' %}"> Працівники</a>
+            </li>
+        </ul>
+    </li>
 </ul>
+{{ request.resolver_match.url_name }}

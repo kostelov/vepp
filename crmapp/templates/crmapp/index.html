@@ -1,0 +1,21 @@
+{% extends 'mainapp/base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+    {{ block.super }} / {{ title }}
+{% endblock %}
+
+{% block breadcrumbs %}
+
+    <!--<ul class="breadcrumb">-->
+        <!--<li>-->
+            <!--{{ block.super }}-->
+        <!--</li>-->
+        <!--<li><a href="{% url 'crm:main_crm' %}">Панель керування</a></li>-->
+    <!--</ul>-->
+{% endblock %}
+
+{% block container %}
+
+{% endblock %}
+
