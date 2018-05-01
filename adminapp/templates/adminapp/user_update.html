@@ -1,4 +1,4 @@
-{% extends 'adminapp/users_list.html' %}
+{% extends 'mainapp/base.html' %}
 {% load staticfiles %}
 {% load tags %}
 
@@ -6,16 +6,15 @@
     {{ block.super }} / {{ title }}
 {% endblock %}
 
-{% block breadcrumbs %}
+<!--{% block breadcrumbs %}-->
 
-    <ul class="breadcrumb">
-        <li>
-            {{ block.super }}
-        </li>
-        <li><a href="{% url 'admin:user_update' object.pk%}">{{ object.last_name }} {{ object.first_name }}</a></li>
-        <!--<li class="active">Directory Page</li>-->
-    </ul>
-{% endblock %}
+    <!--<ul class="breadcrumb">-->
+        <!--<li>-->
+            <!--{{ block.super }}-->
+        <!--</li>-->
+        <!--<li><a href="{% url 'admin:user_update' object.pk%}">{{ object.last_name }} {{ object.first_name }}</a></li>-->
+    <!--</ul>-->
+<!--{% endblock %}-->
 
 {% block container %}
 <div class="row">
@@ -26,14 +25,6 @@
                 <div class="form">
                     <form id="signupForm" class="form-horizontal" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
-                        <!--{% for field in form %}-->
-                            <!--<div class="form-group">-->
-                                <!--<label class="control-label col-lg-2">{{ field.label_tag }}</label>-->
-                                <!--<div class="col-lg-10">-->
-                                    <!--{{ field }}-->
-                                <!--</div>-->
-                            <!--</div>-->
-                        <!--{% endfor %}-->
                         <div class="form-group">
                             <label class="control-label col-lg-2">{{ form.username.label_tag }}</label>
                             <div class="col-lg-10">

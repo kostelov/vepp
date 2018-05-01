@@ -1,20 +1,19 @@
-{% extends 'adminapp/index.html' %}
+{% extends 'mainapp/base.html' %}
 {% load staticfiles %}
 
 {% block title %}
     {{ block.super }} / {{ title }}
 {% endblock %}
 
-{% block breadcrumbs %}
+<!--{% block breadcrumbs %}-->
 
-    <ul class="breadcrumb">
-        <li>
-            {{ block.super }}
-        </li>
-        <li><a href="{% url 'admin:user_create' %}">{{ title }}</a></li>
-        <!--<li class="active">Directory Page</li>-->
-    </ul>
-{% endblock %}
+    <!--<ul class="breadcrumb">-->
+        <!--<li>-->
+            <!--{{ block.super }}-->
+        <!--</li>-->
+        <!--<li><a href="{% url 'admin:user_create' %}">{{ title }}</a></li>-->
+    <!--</ul>-->
+<!--{% endblock %}-->
 
 {% block container %}
 <div class="row">
@@ -23,7 +22,7 @@
             <header class="panel-heading">{{ title }}</header>
             <div class="panel-body">
                 <div class="form">
-                    <form id="signupForm" class="cmxform form-horizontal adminex-form" method="post" enctype="multipart/form-data">
+                    <form id="signupForm" class="form-horizontal" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         <!--{{ form.as_p }}-->
                         {% for field in form %}

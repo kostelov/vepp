@@ -1,4 +1,4 @@
-{% extends 'adminapp/index.html' %}
+{% extends 'mainapp/base.html' %}
 {% load staticfiles %}
 {% load tags %}
 
@@ -6,15 +6,15 @@
     {{ block.super }} / {{ title }}
 {% endblock %}
 
-{% block breadcrumbs %}
+<!--{% block breadcrumbs %}-->
 
-    <ul class="breadcrumb">
-        <li>
-            {{ block.super }}
-        </li>
-        <li><a href="{% url 'admin:users' %}">{{ title }}</a></li>
-    </ul>
-{% endblock %}
+    <!--<ul class="breadcrumb">-->
+        <!--<li>-->
+            <!--{{ block.super }}-->
+        <!--</li>-->
+        <!--<li><a href="{% url 'admin:users' %}">{{ title }}</a></li>-->
+    <!--</ul>-->
+<!--{% endblock %}-->
 
 {% block container %}
 <div class="directory-info-row">

@@ -5,16 +5,15 @@
     {{ block.super }} / {{ title }}
 {% endblock %}
 
-{% block breadcrumbs %}
+<!--{% block breadcrumbs %}-->
 
-    <ul class="breadcrumb">
-        <li>
-            {{ block.super }}
-        </li>
-        <li><a href="{% url 'admin:admin' %}">Адміністрування</a></li>
-        <!--<li class="active">Directory Page</li>-->
-    </ul>
-{% endblock %}
+    <!--<ul class="breadcrumb">-->
+        <!--<li>-->
+            <!--{{ block.super }}-->
+        <!--</li>-->
+        <!--<li><a href="{% url 'admin:admin' %}">Адміністрування</a></li>-->
+    <!--</ul>-->
+<!--{% endblock %}-->
 
 {% block container %}
 <div class="wrapper widgets">
@@ -29,7 +28,6 @@
                                     <i class="fa fa-users"></i>
                                 </div>
                                 <div class="col-xs-8">
-                                    <!--<span class="state-title">  </span>-->
                                     <h4>Користувачі - {{ object }}</h4>
                                 </div>
                             </div>
@@ -46,7 +44,6 @@
                                     <i class="fa fa-user-plus"></i>
                                 </div>
                                 <div class="col-xs-8">
-                                    <!--<span class="state-title">  </span>-->
                                     <h4>Новий користувач</h4>
                                 </div>
                             </div>
