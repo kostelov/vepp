@@ -1,6 +1,5 @@
 from django.urls import re_path
 import crmapp.views as crmapp
-import adminapp.views as adminapp
 
 app_name = 'crmapp'
 

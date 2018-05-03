@@ -5,17 +5,44 @@
     {{ block.super }} / {{ title }}
 {% endblock %}
 
-<!--{% block breadcrumbs %}-->
-
-    <!--<ul class="breadcrumb">-->
-        <!--<li>-->
-            <!--{{ block.super }}-->
-        <!--</li>-->
-        <!--<li><a href="{% url 'crm:main_crm' %}">Панель керування</a></li>-->
-    <!--</ul>-->
-<!--{% endblock %}-->
-
 {% block container %}
-
+<div class="wrapper widgets">
+    <div class="row">
+        <div class="row states-info">
+            <a href="{#% url 'admin:users' %#}">
+                <div class="col-md-3">
+                    <div class="panel">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <i class="fa fa-users"></i>
+                                </div>
+                                <div class="col-xs-8">
+                                    <h4>Контрагенти</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            <!--<a href="{% url 'admin:user_create' %}">-->
+                <!--<div class="col-md-3">-->
+                    <!--<div class="panel">-->
+                        <!--<div class="panel-body">-->
+                            <!--<div class="row">-->
+                                <!--<div class="col-xs-4">-->
+                                    <!--<i class="fa fa-user-plus"></i>-->
+                                <!--</div>-->
+                                <!--<div class="col-xs-8">-->
+                                    <!--<h4>Новий користувач</h4>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</a>-->
+        </div>
+    </div>
+</div>
 {% endblock %}
 
