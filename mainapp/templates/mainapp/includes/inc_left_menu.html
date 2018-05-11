@@ -21,7 +21,7 @@
         <a href="{% url 'crm:main_crm' %}"><i class="fa fa-home"></i> <span>Панель керування</span></a>
         <ul class="sub-menu-list">
             <li class="{% if request.resolver_match.url_name == 'partners' %} active {% endif %}">
-                <a href="{#% url 'crm:main_crm' %#}"> Контрагенти</a>
+                <a href="{% url 'crm:partners' %}"> Контрагенти</a>
             </li>
             <li class="{% if request.resolver_match.url_name == 'users' %} active {% endif %}">
                 <a href="{#% url 'admin:users' %#}"> Договора</a>
@@ -41,4 +41,4 @@
         </ul>
     </li>
 </ul>
-{{ request.resolver_match.namespace}}
+<!--{{ request.resolver_match.url_name}}-->

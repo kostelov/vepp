@@ -34,7 +34,7 @@ class Partner(models.Model):
     edrpoy = models.CharField(verbose_name='єдрпоу', max_length=10, blank=True)
     dfro = models.CharField(verbose_name='дфро', max_length=15, blank=True)
     payment_account = models.CharField(verbose_name='розрахунковий рахунок', max_length=20, blank=True)
-    bank = models.ForeignKey(Bank, on_delete=models.CASCADE)
+    bank = models.ForeignKey(Bank, on_delete=models.CASCADE, verbose_name='банк', default='')
     cert_vat = models.CharField(verbose_name='свідоцтво платника пдв', max_length=15, blank=True)
     dir_name = models.CharField(verbose_name='директор', max_length=150, blank=True)
     responsible = models.CharField(verbose_name='відповідальна особа', max_length=150, blank=True)

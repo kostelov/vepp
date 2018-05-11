@@ -1,0 +1,74 @@
+{% extends 'mainapp/base.html' %}
+{% load staticfiles %}
+{% load tags %}
+
+{% block title %}
+    {{ block.super }} / {{ title }}
+{% endblock %}
+
+{% block breadcrumbs %}
+
+    <ul class="breadcrumb">
+        <li>
+            {{ block.super }}
+        </li>
+        <li><a href="{% url 'crm:workers_list' %}">{{ title }}</a></li>
+    </ul>
+{% endblock %}
+
+{% block container %}
+<div class="directory-info-row">
+    <div class="row">
+        <div class="col-lg-2">
+            <a href="{% url 'crm:partner_create' %}">
+                <button class="btn btn-primary" type="button">Додати</button>
+            </a>
+            <a href="{% url 'crm:main_crm' %}">
+                <button class="btn btn-default" type="button">Назад</button>
+            </a>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-sm-12">
+            <section class="panel">
+                <header class="panel-heading">
+                    {{ title }}
+                </header>
+                    <div class="panel-body" style="display: block;">
+                        <table class="table table-hover general-table">
+                            <thead>
+                                <tr>
+                                    <th>Підприємство</th>
+                                    <th>Директор</th>
+                                    <th>Відповідальна особа</th>
+                                    <th>Телефон #1</th>
+                                    <th>Телефон #2</th>
+                                    <th>Телефон #3</th>
+                                    <th>e-mail</th>
+                                    <th>Адреса</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for object in object_list %}
+                                <tr>
+                                    <td><a href="{% url 'crm:partner_read' object.pk %}">{{ object.short_name }}</a></td>
+                                    <td>{{ object.dir_name }}</td>
+                                    <td>{{ object.responsible }}</td>
+                                    <td>{{ object.phone1 }}</td>
+                                    <td>{{ object.phone2 }}</td>
+                                    <td>{{ object.phone3 }}</td>
+                                    <td>{{ object.email }}</td>
+                                    <td>{{ object.town }} {{ object.district }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+            </section>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

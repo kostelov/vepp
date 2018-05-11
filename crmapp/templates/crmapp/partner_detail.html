@@ -1,0 +1,13 @@
+{% extends 'mainapp/base.html' %}
+{% load staticfiles %}
+{% load tags %}
+
+{% block title %}
+    {{ block.super }} / {{ title }}
+{% endblock %}
+
+{% block container %}
+<div class="row">
+    {{ object.full_name }}
+</div>
+{% endblock %}

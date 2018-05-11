@@ -1,0 +1,50 @@
+{% extends 'mainapp/base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+    {{ block.super }} / {{ title }}
+{% endblock %}
+
+<!--{% block breadcrumbs %}-->
+
+    <!--<ul class="breadcrumb">-->
+        <!--<li>-->
+            <!--{{ block.super }}-->
+        <!--</li>-->
+        <!--<li><a href="{% url 'admin:user_create' %}">{{ title }}</a></li>-->
+    <!--</ul>-->
+<!--{% endblock %}-->
+
+{% block container %}
+<div class="row">
+    <div class="col-lg-8">
+        <section class="panel">
+            <header class="panel-heading">{{ title }}</header>
+            <div class="panel-body">
+                <div class="form">
+                    <form id="signupForm" class="form-horizontal" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <!--{{ form.as_p }}-->
+                        {% for field in form %}
+                        <div class="form-group">
+                            <label class="control-label col-lg-2">{{ field.label_tag }}</label>
+                            <div class="col-lg-10">
+                                {{ field }}
+                            </div>
+                        </div>
+                        {% endfor %}
+                        <button class="btn btn-primary" type="submit">
+                            Зберегти
+                        </button>
+                        <a href="{% url 'crm:partners' %}">
+                            <button class="btn btn-default" type="button">
+                                Відмінити
+                            </button>
+                        </a>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+{% endblock %}

@@ -63,11 +63,35 @@
 
         <!--logo and iconic logo start-->
         <div class="logo">
-            <a href="{% url 'main' %}"><img src="{% static '/images/logo.png' %}" alt=""></a>
+            {% if user.is_dir or user.is_assistant %}
+            <a href="{% url 'crm:main_crm' %}">
+                <img src="{% static '/images/logo.png' %}" alt="">
+            </a>
+            {% elif user.is_superuser %}
+            <a href="{% url 'admin:admin' %}">
+                <img src="{% static '/images/logo.png' %}" alt="">
+            </a>
+            {% else %}
+            <a href="{% url 'main' %}">
+                <img src="{% static '/images/logo.png' %}" alt="">
+            </a>
+            {% endif %}
         </div>
 
         <div class="logo-icon text-center">
-            <a href="{% url 'main' %}"><img src="{% static '/images/logo_icon.png' %}" alt=""></a>
+            {% if user.is_dir or user.is_assistant %}
+            <a href="{% url 'crm:main_crm' %}">
+                <img src="{% static '/images/logo_icon.png' %}" alt="">
+            </a>
+            {% elif user.is_superuser %}
+            <a href="{% url 'admin:admin' %}">
+                <img src="{% static '/images/logo_icon.png' %}" alt="">
+            </a>
+            {% else %}
+            <a href="{% url 'main' %}">
+                <img src="{% static '/images/logo_icon.png' %}" alt="">
+            </a>
+            {% endif %}
         </div>
         <!--logo and iconic logo end-->
 
