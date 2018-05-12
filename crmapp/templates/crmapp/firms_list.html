@@ -6,13 +6,11 @@
     {{ block.super }} / {{ title }}
 {% endblock %}
 
-{% block breadcrumbs %}
-
 {% block container %}
 <div class="directory-info-row">
     <div class="row">
         <div class="col-lg-2">
-            <a href="{% url 'crm:partner_create' %}">
+            <a href="{#% url 'crm:partner_create' %#}">
                 <button class="btn btn-primary" type="button">Додати</button>
             </a>
             <a href="{% url 'crm:main_crm' %}">
@@ -31,9 +29,8 @@
                         <table class="table table-hover general-table">
                             <thead>
                                 <tr>
-                                    <th>Підприємство</th>
+                                    <th>Фірма</th>
                                     <th>Керівник/Директор</th>
-                                    <th>Відповідальна особа</th>
                                     <th>Телефон #1</th>
                                     <th>Телефон #2</th>
                                     <th>Телефон #3</th>
@@ -45,10 +42,9 @@
                             {% for object in object_list %}
                                 <tr>
                                     <td>
-                                        <a href="{% url 'crm:partner_read' object.pk %}">{{ object.short_name }}</a>
+                                        <a href="{#% url 'crm:partner_read' object.pk %#}">{{ object.short_name }}</a>
                                     </td>
                                     <td>{{ object.dir_name }}</td>
-                                    <td>{{ object.responsible }}</td>
                                     <td>{{ object.phone1 }}</td>
                                     <td>{{ object.phone2 }}</td>
                                     <td>{{ object.phone3 }}</td>

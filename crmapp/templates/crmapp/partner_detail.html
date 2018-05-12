@@ -9,7 +9,7 @@
 {% block container %}
 <div class="row">
     <div class="col-lg-2">
-        <a href="{#% url 'crm:partner_create' %#}">
+        <a href="{% url 'crm:partner_update' object.pk %}">
             <button class="btn btn-primary" type="button">Редагувати</button>
         </a>
         <a href="{% url 'crm:partners' %}">

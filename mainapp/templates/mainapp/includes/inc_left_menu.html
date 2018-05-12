@@ -32,8 +32,8 @@
             <li class="{% if request.resolver_match.url_name == 'user_create' %} active {% endif %}">
                 <a href="{#% url 'admin:user_create' %#}"> Акти</a>
             </li>
-            <li class="{% if request.resolver_match.url_name == 'user_create' %} active {% endif %}">
-                <a href="{#% url 'admin:user_create' %#}"> Фірми</a>
+            <li class="{% if request.resolver_match.url_name == 'firms' %} active {% endif %}">
+                <a href="{% url 'crm:firms' %}"> Фірми</a>
             </li>
             <li class="{% if request.resolver_match.url_name == 'workers_list' or request.resolver_match.url_name == 'worker_detail' or request.resolver_match.url_name == 'worker_update' %} active {% endif %}">
                 <a href="{% url 'crm:workers_list' %}"> Працівники</a>

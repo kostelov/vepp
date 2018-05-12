@@ -85,7 +85,7 @@ def partner_create_view(request):
         if form.is_valid():
             try:
                 form.save()
-                return HttpResponseRedirect(reverse('crm:main_crm'))
+                return HttpResponseRedirect(reverse('crm:partners'))
             except Exception as e:
                 pass
     else:
@@ -95,6 +95,30 @@ def partner_create_view(request):
         'title': title,
         'banks': banks,
         'form': form,
+    }
+
+    return render(request, 'crmapp/partner_update.html', context)
+
+
+@login_required
+def partner_update_view(request, partner_pk):
+    partner = get_object_or_404(Partner, pk=partner_pk)
+    title = f'Редагувати контрагента - {partner.short_name}'
+    if request.method == 'POST':
+        form = PartnerCreateForm(request.POST, instance=partner)
+        if form.is_valid():
+            try:
+                form.save()
+                return HttpResponseRedirect(reverse('crm:partner_read', kwargs={'partner_pk': partner.pk}))
+            except Exception as e:
+                pass
+    else:
+        form = PartnerCreateForm(instance=partner)
+
+    context = {
+        'title': title,
+        'form': form,
+        'object': partner,
     }
 
     return render(request, 'crmapp/partner_update.html', context)
@@ -111,3 +135,16 @@ def partner_read_view(request, partner_pk):
     }
 
     return render(request, 'crmapp/partner_detail.html', context)
+
+
+@login_required
+def firms_view(request):
+    title = 'Фірми'
+    # partners = Partner.objects.all()
+
+    context = {
+        'title': title,
+        # 'object_list': partners
+    }
+
+    return render(request, 'crmapp/firms_list.html', context)
