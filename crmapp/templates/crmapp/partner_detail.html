@@ -8,6 +8,123 @@
 
 {% block container %}
 <div class="row">
-    {{ object.full_name }}
+    <div class="col-lg-2">
+        <a href="{#% url 'crm:partner_create' %#}">
+            <button class="btn btn-primary" type="button">Редагувати</button>
+        </a>
+        <a href="{% url 'crm:partners' %}">
+            <button class="btn btn-default" type="button">Назад</button>
+        </a>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-sm-6">
+        <section class="panel">
+            <header class="panel-heading">
+                Основна інформація
+            </header>
+            <div class="panel-body">
+                <ul class="p-info">
+                    <li>
+                        <div class="title">Повна назва підприємства</div>
+                        <div class="desk">{{ object.full_name }}</div>
+                    </li>
+                    <li>
+                        <div class="title">Скорочена назва підприємства</div>
+                        <div class="desk">{{ object.short_name }}</div>
+                    </li>
+                    <li>
+                        <div class="title">Керівник/Директор</div>
+                        <div class="desk">{{ object.dir_name }}</div>
+                    </li>
+                    <li>
+                        <div class="title">Юридична особа</div>
+                        {% if  object.entity %}
+                        <div class="desk">Так</div>
+                        {% else %}
+                        <div class="desk">Ні</div>
+                        {% endif %}
+                    </li>
+                    <li>
+                        <div class="title">Свідоцтво платника ПДВ</div>
+                        {% if object.cert_vat %}
+                        <div class="desk">{{ object.cert_vat }}</div>
+                        {% else %}
+                        <div class="desk">Відсутнє</div>
+                        {% endif %}
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </div>
+    <div class="col-sm-6">
+        <section class="panel">
+            <header class="panel-heading">
+                Реквізити
+            </header>
+            <div class="panel-body">
+                <ul class="p-info">
+                    <li>
+                        <div class="title">ІНН</div>
+                        <div class="desk">{{ object.inn }}</div>
+                    </li>
+                    <li>
+                        <div class="title">ЄДРПОУ</div>
+                        <div class="desk">{{ object.edrpoy }}</div>
+                    </li>
+                    <li>
+                        <div class="title">ДФРО</div>
+                        <div class="desk">{{ object.dfro }}</div>
+                    </li>
+                    <li>
+                        <div class="title">Банк</div>
+                        <div class="desk">{{ object.bank }}</div>
+                        <div class="title">МФО</div>
+                        <div class="desk">{{ object.bank.mfo }}</div>
+                        <div class="title">р/р</div>
+                        <div class="desk">{{ object.payment_account }}</div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </div>
+    <div class="col-sm-6">
+        <section class="panel">
+            <header class="panel-heading">
+                Контакти
+            </header>
+            <div class="panel-body">
+                <ul class="p-info">
+                    <li>
+                        <div class="title">Відповідальний</div>
+                        <div class="desk">{{ object.responsible }}</div>
+                    </li>
+                    <li>
+                        <div class="title">Телефони</div>
+                        <div class="desk">{{ object.phone1 }}</div>
+                        <div class="desk">{{ object.phone2 }}</div>
+                        <div class="desk">{{ object.phone3 }}</div>
+                    </li>
+                    <li>
+                        <div class="title">e-mail</div>
+                        <div class="desk">{{ object.email }}</div>
+                    </li>
+                    <li>
+                        <div class="title">індекс</div>
+                        <div class="desk">{{ object.zipcode }}</div>
+                        <div class="title">область</div>
+                        <div class="desk">{{ object.region }}</div>
+                        <div class="title">район</div>
+                        <div class="desk">{{ object.district }}</div>
+                        <div class="title">населений пункт</div>
+                        <div class="desk">{{ object.town }}</div>
+                        <div class="title">вулиця</div>
+                        <div class="desk">{{ object.address }}</div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </div>
 </div>
 {% endblock %}

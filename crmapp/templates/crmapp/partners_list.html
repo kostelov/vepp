@@ -40,7 +40,7 @@
                             <thead>
                                 <tr>
                                     <th>Підприємство</th>
-                                    <th>Директор</th>
+                                    <th>Керівник/Директор</th>
                                     <th>Відповідальна особа</th>
                                     <th>Телефон #1</th>
                                     <th>Телефон #2</th>
@@ -52,20 +52,21 @@
                             <tbody>
                             {% for object in object_list %}
                                 <tr>
-                                    <td><a href="{% url 'crm:partner_read' object.pk %}">{{ object.short_name }}</a></td>
+                                    <td>
+                                        <a href="{% url 'crm:partner_read' object.pk %}">{{ object.short_name }}</a>
+                                    </td>
                                     <td>{{ object.dir_name }}</td>
                                     <td>{{ object.responsible }}</td>
                                     <td>{{ object.phone1 }}</td>
                                     <td>{{ object.phone2 }}</td>
                                     <td>{{ object.phone3 }}</td>
                                     <td>{{ object.email }}</td>
-                                    <td>{{ object.town }} {{ object.district }}</td>
+                                    <td>{{ object.town }}</td>
                                 </tr>
                             {% endfor %}
                             </tbody>
                         </table>
                     </div>
-
             </section>
         </div>
     </div>
