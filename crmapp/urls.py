@@ -15,4 +15,5 @@ urlpatterns = [
     re_path(r'^partner/update/(?P<partner_pk>\d+)/$', crmapp.partner_update_view, name='partner_update'),
 
     re_path(r'^firms/$', crmapp.firms_view, name='firms'),
+    re_path(r'^firm/create/$', crmapp.firm_create_view, name='firm_create'),
 ]

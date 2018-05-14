@@ -3,15 +3,13 @@
 {% load tags %}
 
 {% block title %}
-    {{ block.super }} / {{ title }}
+    {{ title }} / {{ block.super }}
 {% endblock %}
-
-{% block breadcrumbs %}
 
 {% block container %}
 <div class="directory-info-row">
     <div class="row">
-        <div class="col-lg-2">
+        <div class="col-lg-6">
             <a href="{% url 'crm:partner_create' %}">
                 <button class="btn btn-primary" type="button">Додати</button>
             </a>
@@ -22,7 +20,7 @@
     </div>
     <br>
     <div class="row">
-        <div class="col-sm-12">
+        <div class="col-lg-12">
             <section class="panel">
                 <header class="panel-heading">
                     {{ title }}

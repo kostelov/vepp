@@ -3,12 +3,12 @@
 {% load tags %}
 
 {% block title %}
-    {{ block.super }} / {{ title }}
+    {{ title }} / {{ block.super }}
 {% endblock %}
 
 {% block container %}
 <div class="row">
-    <div class="col-lg-2">
+    <div class="col-lg-6">
         <a href="{% url 'crm:partner_update' object.pk %}">
             <button class="btn btn-primary" type="button">Редагувати</button>
         </a>
@@ -19,7 +19,7 @@
 </div>
 <br>
 <div class="row">
-    <div class="col-sm-6">
+    <div class="col-lg-8">
         <section class="panel">
             <header class="panel-heading">
                 Основна інформація
@@ -41,9 +41,9 @@
                     <li>
                         <div class="title">Юридична особа</div>
                         {% if  object.entity %}
-                        <div class="desk">Так</div>
+                        <div class="desk"><i class="fa fa-check-square"></i></div>
                         {% else %}
-                        <div class="desk">Ні</div>
+                        <div class="desk"><i class="fa fa-square-o"></i></div>
                         {% endif %}
                     </li>
                     <li>
@@ -58,7 +58,7 @@
             </div>
         </section>
     </div>
-    <div class="col-sm-6">
+    <div class="col-lg-8">
         <section class="panel">
             <header class="panel-heading">
                 Реквізити
@@ -89,7 +89,7 @@
             </div>
         </section>
     </div>
-    <div class="col-sm-6">
+    <div class="col-lg-8">
         <section class="panel">
             <header class="panel-heading">
                 Контакти

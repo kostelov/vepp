@@ -3,8 +3,8 @@ from django.contrib.auth.decorators import login_required
 
 from authapp.models import ProjectUser
 from authapp.forms import UserUpdateForm
-from crmapp.forms import PartnerCreateForm
-from crmapp.models import Bank, Partner
+from crmapp.forms import PartnerCreateForm, FirmCreateForm
+from crmapp.models import Bank, Partner, Firm
 
 
 @login_required
@@ -140,11 +140,34 @@ def partner_read_view(request, partner_pk):
 @login_required
 def firms_view(request):
     title = 'Фірми'
-    # partners = Partner.objects.all()
+    firms = Firm.objects.all()
 
     context = {
         'title': title,
-        # 'object_list': partners
+        'object_list': firms
     }
 
     return render(request, 'crmapp/firms_list.html', context)
+
+@login_required
+def firm_create_view(request):
+    title = 'Додати фірму'
+    banks = Bank.objects.all().order_by('name')
+    if request.method == 'POST':
+        form = FirmCreateForm(request.POST)
+        if form.is_valid():
+            try:
+                form.save()
+                return HttpResponseRedirect(reverse('crm:firms'))
+            except Exception as e:
+                pass
+    else:
+        form = FirmCreateForm(initial={'banks':banks})
+
+    context = {
+        'title': title,
+        'form': form,
+        'banks': banks,
+    }
+
+    return render(request, 'crmapp/firm_update.html', context)
