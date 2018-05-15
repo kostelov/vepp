@@ -131,7 +131,7 @@ def partner_read_view(request, partner_pk):
 
     context = {
         'title': title,
-        'object': partner
+        'object': partner,
     }
 
     return render(request, 'crmapp/partner_detail.html', context)
@@ -144,10 +144,11 @@ def firms_view(request):
 
     context = {
         'title': title,
-        'object_list': firms
+        'object_list': firms,
     }
 
     return render(request, 'crmapp/firms_list.html', context)
+
 
 @login_required
 def firm_create_view(request):
@@ -162,12 +163,49 @@ def firm_create_view(request):
             except Exception as e:
                 pass
     else:
-        form = FirmCreateForm(initial={'banks':banks})
+        form = FirmCreateForm(initial={'banks': banks})
 
     context = {
         'title': title,
         'form': form,
         'banks': banks,
+    }
+
+    return render(request, 'crmapp/firm_update.html', context)
+
+
+@login_required
+def firm_read_view(request, firm_pk):
+    firm = get_object_or_404(Firm, pk=firm_pk)
+    title = firm.short_name
+
+    context = {
+        'title': title,
+        'object': firm,
+    }
+
+    return render(request, 'crmapp/firm_detail.html', context)
+
+
+@login_required
+def firm_update_view(request, firm_pk):
+    firm = get_object_or_404(Firm, pk=firm_pk)
+    title = f'Редагувати фірму - {firm.short_name}'
+    if request.method == 'POST':
+        form = FirmCreateForm(request.POST, instance=firm)
+        if form.is_valid():
+            try:
+                form.save()
+                return HttpResponseRedirect(reverse('crm:firm_read', kwargs={'firm_pk': firm.pk}))
+            except Exception as e:
+                pass
+    else:
+        form = FirmCreateForm(instance=firm)
+
+    context = {
+        'title': title,
+        'form': form,
+        'object': firm,
     }
 
     return render(request, 'crmapp/firm_update.html', context)

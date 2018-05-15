@@ -9,10 +9,10 @@
 {% block container %}
 <div class="row">
     <div class="col-lg-6">
-        <a href="{% url 'crm:partner_update' object.pk %}">
+        <a href="{% url 'crm:firm_update' object.pk %}">
             <button class="btn btn-primary" type="button">Редагувати</button>
         </a>
-        <a href="{% url 'crm:partners' %}">
+        <a href="{% url 'crm:firms' %}">
             <button class="btn btn-default" type="button">Назад</button>
         </a>
     </div>
@@ -38,14 +38,14 @@
                         <div class="title">Керівник/Директор</div>
                         <div class="desk">{{ object.dir_name }}</div>
                     </li>
-                    <li>
-                        <div class="title">Юридична особа</div>
-                        {% if  object.entity %}
-                        <div class="desk"><i class="fa fa-check-square"></i></div>
-                        {% else %}
-                        <div class="desk"><i class="fa fa-square-o"></i></div>
-                        {% endif %}
-                    </li>
+                    <!--<li>-->
+                        <!--<div class="title">Юридична особа</div>-->
+                        <!--{% if  object.entity %}-->
+                        <!--<div class="desk"><i class="fa fa-check-square"></i></div>-->
+                        <!--{% else %}-->
+                        <!--<div class="desk"><i class="fa fa-square-o"></i></div>-->
+                        <!--{% endif %}-->
+                    <!--</li>-->
                     <li>
                         <div class="title">Свідоцтво платника ПДВ</div>
                         {% if object.cert_vat %}
@@ -96,10 +96,10 @@
             </header>
             <div class="panel-body">
                 <ul class="p-info">
-                    <li>
-                        <div class="title">Відповідальний</div>
-                        <div class="desk">{{ object.responsible }}</div>
-                    </li>
+                    <!--<li>-->
+                        <!--<div class="title">Відповідальний</div>-->
+                        <!--<div class="desk">{{ object.responsible }}</div>-->
+                    <!--</li>-->
                     <li>
                         <div class="title">Телефони</div>
                         <div class="desk">{{ object.phone1 }}</div>
@@ -118,7 +118,11 @@
                         <div class="title">область</div>
                         <div class="desk">{{ object.region }}</div>
                         <div class="title">район</div>
-                        <div class="desk">{{ object.district }}</div>
+                        {% if  object.district %}
+                            <div class="desk">{{ object.district }}</div>
+                        {% else %}
+                            <div class="desk">&nbsp;</div>
+                        {% endif %}
                         <div class="title">населений пункт</div>
                         <div class="desk">{{ object.town }}</div>
                         <div class="title">вулиця</div>

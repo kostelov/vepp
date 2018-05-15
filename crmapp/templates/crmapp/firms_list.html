@@ -42,7 +42,7 @@
                             {% for object in object_list %}
                                 <tr>
                                     <td>
-                                        <a href="{#% url 'crm:partner_read' object.pk %#}">{{ object.short_name }}</a>
+                                        <a href="{% url 'crm:firm_read' object.pk %}">{{ object.short_name }}</a>
                                     </td>
                                     <td>{{ object.dir_name }}</td>
                                     <td>{{ object.phone1 }}</td>
