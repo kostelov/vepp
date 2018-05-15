@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, HttpResponseRedirect, reverse
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 
 from authapp.models import ProjectUser
 from authapp.forms import UserUpdateForm
@@ -7,7 +7,7 @@ from crmapp.forms import PartnerCreateForm, FirmCreateForm
 from crmapp.models import Bank, Partner, Firm
 
 
-@login_required
+@user_passes_test(lambda user: user.is_assistant or user.is_superuser or user.is_dir)
 def main_crm(request):
     title = 'Панель керування'
     context = {
@@ -17,7 +17,7 @@ def main_crm(request):
 
 
 # просмотр списка сотрудников
-@login_required
+@user_passes_test(lambda user: user.is_assistant or user.is_superuser or user.is_dir)
 def workers_list_view(request):
     title = 'Працівники'
     users_list = ProjectUser.objects.all().order_by('-is_active', 'username')
@@ -63,7 +63,7 @@ def worker_update_view(request, worker_pk):
         return render(request, 'crmapp/worker_update.html', context)
 
 
-@login_required
+@user_passes_test(lambda user: user.is_assistant or user.is_superuser or user.is_dir)
 def partners_view(request):
     title = 'Контрагенти'
     partners = Partner.objects.all()
@@ -76,7 +76,7 @@ def partners_view(request):
     return render(request, 'crmapp/partners_list.html', context)
 
 
-@login_required
+@user_passes_test(lambda user: user.is_assistant or user.is_superuser or user.is_dir)
 def partner_create_view(request):
     title = 'Додати контрагента'
     banks = Bank.objects.all().order_by('name')
@@ -100,7 +100,7 @@ def partner_create_view(request):
     return render(request, 'crmapp/partner_update.html', context)
 
 
-@login_required
+@user_passes_test(lambda user: user.is_assistant or user.is_superuser or user.is_dir)
 def partner_update_view(request, partner_pk):
     partner = get_object_or_404(Partner, pk=partner_pk)
     title = f'Редагувати контрагента - {partner.short_name}'
@@ -124,7 +124,7 @@ def partner_update_view(request, partner_pk):
     return render(request, 'crmapp/partner_update.html', context)
 
 
-@login_required
+@user_passes_test(lambda user: user.is_assistant or user.is_superuser or user.is_dir)
 def partner_read_view(request, partner_pk):
     partner = get_object_or_404(Partner, pk=partner_pk)
     title = partner.short_name
@@ -137,7 +137,7 @@ def partner_read_view(request, partner_pk):
     return render(request, 'crmapp/partner_detail.html', context)
 
 
-@login_required
+@user_passes_test(lambda user: user.is_assistant or user.is_superuser or user.is_dir)
 def firms_view(request):
     title = 'Фірми'
     firms = Firm.objects.all()
@@ -150,7 +150,7 @@ def firms_view(request):
     return render(request, 'crmapp/firms_list.html', context)
 
 
-@login_required
+@user_passes_test(lambda user: user.is_assistant or user.is_superuser or user.is_dir)
 def firm_create_view(request):
     title = 'Додати фірму'
     banks = Bank.objects.all().order_by('name')
@@ -174,7 +174,7 @@ def firm_create_view(request):
     return render(request, 'crmapp/firm_update.html', context)
 
 
-@login_required
+@user_passes_test(lambda user: user.is_assistant or user.is_superuser or user.is_dir)
 def firm_read_view(request, firm_pk):
     firm = get_object_or_404(Firm, pk=firm_pk)
     title = firm.short_name
@@ -187,7 +187,7 @@ def firm_read_view(request, firm_pk):
     return render(request, 'crmapp/firm_detail.html', context)
 
 
-@login_required
+@user_passes_test(lambda user: user.is_assistant or user.is_superuser or user.is_dir)
 def firm_update_view(request, firm_pk):
     firm = get_object_or_404(Firm, pk=firm_pk)
     title = f'Редагувати фірму - {firm.short_name}'

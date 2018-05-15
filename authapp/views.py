@@ -19,7 +19,7 @@ def login(request):
             if user and user.is_active and user.is_superuser:
                 auth.login(request, user)
                 return HttpResponseRedirect(reverse('admin:admin'))
-            elif user and user.is_active or user.is_dir or user.is_assistant:
+            elif user and user.is_active and (user.is_dir or user.is_assistant):
                 auth.login(request, user)
                 return HttpResponseRedirect(reverse('crm:main_crm'))
             elif user and user.is_active:

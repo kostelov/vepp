@@ -17,6 +17,7 @@
         </ul>
     </li>
     {% endif %}
+    {% if user.is_dir or user.is_assistant %}
     <li class="menu-list {% if request.resolver_match.namespace == 'crm' %} nav-active {% endif %}">
         <a href="{% url 'crm:main_crm' %}"><i class="fa fa-home"></i> <span>Панель керування</span></a>
         <ul class="sub-menu-list">
@@ -40,5 +41,7 @@
             </li>
         </ul>
     </li>
+    {% endif %}
 </ul>
 <!--{{ request.resolver_match.url_name}}-->
+<!--{{user}} {{object.username}}-->

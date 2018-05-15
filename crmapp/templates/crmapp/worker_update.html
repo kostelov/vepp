@@ -19,6 +19,7 @@
 {% block container %}
 <div class="row">
     <div class="col-lg-8">
+        {% if user.is_superuser or user.is_dir or user.is_assistant or object.pk == user.pk %}
         <section class="panel">
             <header class="panel-heading">{{ title }}</header>
             <div class="panel-body">
@@ -111,15 +112,34 @@
                         <button class="btn btn-primary" type="submit">
                             Зберегти
                         </button>
+                        {% if user.is_superuser or user.is_dir or user.is_assistant %}
                         <a href="{% url 'crm:workers_list' %}">
                             <button class="btn btn-default" type="button">
                                 Відмінити
                             </button>
                         </a>
+                        {% else %}
+                        <a href="{% url 'main' %}">
+                            <button class="btn btn-default" type="button">
+                                Відмінити
+                            </button>
+                        </a>
+                        {% endif %}
                     </form>
                 </div>
             </div>
         </section>
+        {% else %}
+        <section class="panel">
+            <header class="panel-heading">Помилка редагування</header>
+            <div class="panel-body">
+                <p>Доступ заборонено</p>
+                <a href="{% url 'main' %}">
+                    <button class="btn btn-default" type="button">Назад</button>
+                </a>
+            </div>
+        </section>
+        {% endif %}
     </div>
 </div>
 {% endblock %}
