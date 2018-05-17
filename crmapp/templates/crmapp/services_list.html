@@ -9,18 +9,18 @@
 {% block container %}
 <div class="directory-info-row">
     <div class="row">
-        <div class="col-lg-6">
-            <a href="{% url 'crm:partner_create' %}">
+        <div class="col-lg-4">
+            <a href="{% url 'crm:service_create' %}" title="Додати послугу/роботу">
                 <button class="btn btn-primary" type="button"><i class="fa fa-plus"></i> Додати</button>
             </a>
-            <a href="{% url 'crm:main_crm' %}">
+            <a href="{% url 'crm:main_crm' %}" title="Панель керування">
                 <button class="btn btn-default" type="button">Назад</button>
             </a>
         </div>
     </div>
     <br>
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-4">
             <section class="panel">
                 <header class="panel-heading">
                     {{ title }}
@@ -29,29 +29,20 @@
                         <table class="table table-hover general-table">
                             <thead>
                                 <tr>
-                                    <th>Підприємство</th>
-                                    <th>Керівник/Директор</th>
-                                    <th>Відповідальна особа</th>
-                                    <th>Телефон #1</th>
-                                    <th>Телефон #2</th>
-                                    <th>Телефон #3</th>
-                                    <th>e-mail</th>
-                                    <th>Адреса</th>
+                                    <th>#</th>
+                                    <th>Послуга/Робота</th>
                                 </tr>
                             </thead>
                             <tbody>
                             {% for object in object_list %}
                                 <tr>
+                                    <td>{{ object.id }}</td>
+                                    <td>{{ object.name }}</td>
                                     <td>
-                                        <a href="{% url 'crm:partner_read' object.pk %}">{{ object.short_name }}</a>
+                                        <a href="{% url 'crm:service_update' object.pk%}" title="Редагувати">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
                                     </td>
-                                    <td>{{ object.dir_name }}</td>
-                                    <td>{{ object.responsible }}</td>
-                                    <td>{{ object.phone1 }}</td>
-                                    <td>{{ object.phone2 }}</td>
-                                    <td>{{ object.phone3 }}</td>
-                                    <td>{{ object.email }}</td>
-                                    <td>{{ object.town }}</td>
                                 </tr>
                             {% endfor %}
                             </tbody>

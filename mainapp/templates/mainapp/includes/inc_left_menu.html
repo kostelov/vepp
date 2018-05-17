@@ -36,6 +36,9 @@
             <li class="{% if request.resolver_match.url_name == 'firms' %} active {% endif %}">
                 <a href="{% url 'crm:firms' %}"> Фірми</a>
             </li>
+            <li class="{% if request.resolver_match.url_name == 'services' %} active {% endif %}">
+                <a href="{% url 'crm:services' %}"> Послуги</a>
+            </li>
             <li class="{% if request.resolver_match.url_name == 'workers_list' or request.resolver_match.url_name == 'worker_detail' or request.resolver_match.url_name == 'worker_update' %} active {% endif %}">
                 <a href="{% url 'crm:workers_list' %}"> Працівники</a>
             </li>

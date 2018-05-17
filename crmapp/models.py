@@ -76,3 +76,7 @@ class Firm(models.Model):
 
     def __str__(self):
         return self.short_name
+
+
+class Services(models.Model):
+    name = models.CharField(verbose_name='послуга/робота', max_length=100, unique=True)

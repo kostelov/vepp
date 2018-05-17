@@ -3,8 +3,8 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 
 from authapp.models import ProjectUser
 from authapp.forms import UserUpdateForm
-from crmapp.forms import PartnerCreateForm, FirmCreateForm
-from crmapp.models import Bank, Partner, Firm
+from crmapp.forms import PartnerCreateForm, FirmCreateForm, ServiceCreateForm
+from crmapp.models import Bank, Partner, Firm, Services
 
 
 @user_passes_test(lambda user: user.is_assistant or user.is_superuser or user.is_dir)
@@ -209,3 +209,62 @@ def firm_update_view(request, firm_pk):
     }
 
     return render(request, 'crmapp/firm_update.html', context)
+
+
+@user_passes_test(lambda user: user.is_assistant or user.is_superuser or user.is_dir)
+def services_view(request):
+    title = 'Послуги'
+    services = Services.objects.all()
+
+    context = {
+        'title': title,
+        'object_list': services,
+    }
+
+    return render(request, 'crmapp/services_list.html', context)
+
+
+@user_passes_test(lambda user: user.is_assistant or user.is_superuser or user.is_dir)
+def service_create_view(request):
+    title = 'Додати роботу/послугу'
+    if request.method == 'POST':
+        form = ServiceCreateForm(request.POST)
+        if form.is_valid():
+            try:
+                form.save()
+                return HttpResponseRedirect(reverse('crm:services'))
+            except Exception as e:
+                pass
+    else:
+        form = ServiceCreateForm()
+
+    context = {
+        'title': title,
+        'form': form,
+    }
+
+    return render(request, 'crmapp/service_update.html', context)
+
+
+@user_passes_test(lambda user: user.is_assistant or user.is_superuser or user.is_dir)
+def service_update_view(request, service_pk):
+    title = 'Редагувати послугу/роботу'
+    service = get_object_or_404(Services, pk=service_pk)
+    if request.method == 'POST':
+        form = ServiceCreateForm(request.POST, instance=service)
+        if form.is_valid():
+            try:
+                form.save()
+                return HttpResponseRedirect(reverse('crm:services'))
+            except Exception as e:
+                pass
+    else:
+        form = ServiceCreateForm(instance=service)
+
+    context = {
+        'title': title,
+        'form': form,
+        'object': service,
+    }
+
+    return render(request, 'crmapp/service_update.html', context)

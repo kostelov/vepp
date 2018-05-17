@@ -2,13 +2,77 @@
 {% load staticfiles %}
 
 {% block title %}
-    {{ title }} / {{ block.super }}
+{{ title }} / {{ block.super }}
 {% endblock %}
 
 {% block container %}
 <div class="wrapper widgets">
     <div class="row">
         <div class="row states-info">
+            <a href="{% url 'crm:partners' %}">
+                <div class="col-md-3">
+                    <div class="panel">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <i class="fa fa-group"></i>
+                                </div>
+                                <div class="col-xs-8">
+                                    <h4>Контрагенти</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            <a href="{#% url 'crm:services' %#}">
+                <div class="col-md-3">
+                    <div class="panel">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <i class="fa fa-briefcase"></i>
+                                </div>
+                                <div class="col-xs-8">
+                                    <h4>Договора</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            <a href="{#% url 'crm:services' %#}">
+                <div class="col-md-3">
+                    <div class="panel">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <i class="fa fa-file-text"></i>
+                                </div>
+                                <div class="col-xs-8">
+                                    <h4>Рахунки</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            <a href="{#% url 'crm:services' %#}">
+                <div class="col-md-3">
+                    <div class="panel">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <i class="fa fa-file-o"></i>
+                                </div>
+                                <div class="col-xs-8">
+                                    <h4>Акти</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
             <a href="{% url 'crm:firms' %}">
                 <div class="col-md-3">
                     <div class="panel">
@@ -25,16 +89,16 @@
                     </div>
                 </div>
             </a>
-            <a href="{% url 'crm:partners' %}">
+            <a href="{% url 'crm:services' %}">
                 <div class="col-md-3">
                     <div class="panel">
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-xs-4">
-                                    <i class="fa fa-group"></i>
+                                    <i class="fa fa-list-alt"></i>
                                 </div>
                                 <div class="col-xs-8">
-                                    <h4>Контрагенти</h4>
+                                    <h4>Послуги</h4>
                                 </div>
                             </div>
                         </div>

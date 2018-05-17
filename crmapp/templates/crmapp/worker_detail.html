@@ -6,16 +6,17 @@
     {{ block.super }} / {{ title }}
 {% endblock %}
 
-<!--{% block breadcrumbs %}-->
-    <!--<ul class="breadcrumb">-->
-        <!--<li>-->
-            <!--{{ block.super }}-->
-        <!--</li>-->
-        <!--<li><a href="{% url 'crm:worker_detail' object.pk %}">{{ object.last_name }} {{ object.first_name }}</a></li>-->
-    <!--</ul>-->
-<!--{% endblock %}-->
+
 
 {% block container %}
+<div class="row">
+    <div class="col-lg-4">
+        <a href="{% url 'crm:workers_list' %}" title="Список працівників">
+            <button class="btn btn-default" type="button">Назад</button>
+        </a>
+    </div>
+</div>
+<br>
 <div class="row">
     <div class="col-md-3">
         <div class="row">

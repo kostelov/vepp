@@ -17,5 +17,9 @@ urlpatterns = [
     re_path(r'^firms/$', crmapp.firms_view, name='firms'),
     re_path(r'^firm/create/$', crmapp.firm_create_view, name='firm_create'),
     re_path(r'^firm/read/(?P<firm_pk>\d+)/$', crmapp.firm_read_view, name='firm_read'),
-    re_path(r'^firm/update/(?P<firm_pk>\d+)/$', crmapp.firm_update_view, name='firm_update  '),
+    re_path(r'^firm/update/(?P<firm_pk>\d+)/$', crmapp.firm_update_view, name='firm_update'),
+
+    re_path(r'^services/$', crmapp.services_view, name='services'),
+    re_path(r'^service/create/$', crmapp.service_create_view, name='service_create'),
+    re_path(r'^service/update/(?P<service_pk>\d+)/$', crmapp.service_update_view, name='service_update'),
 ]
