@@ -7,6 +7,7 @@ from crmapp.forms import PartnerCreateForm, FirmCreateForm, ServiceCreateForm
 from crmapp.models import Bank, Partner, Firm, Services
 
 
+@login_required
 @user_passes_test(lambda user: user.is_assistant or user.is_superuser or user.is_dir)
 def main_crm(request):
     title = 'Панель керування'
@@ -17,6 +18,7 @@ def main_crm(request):
 
 
 # просмотр списка сотрудников
+@login_required
 @user_passes_test(lambda user: user.is_assistant or user.is_superuser or user.is_dir)
 def workers_list_view(request):
     title = 'Працівники'
@@ -63,6 +65,7 @@ def worker_update_view(request, worker_pk):
         return render(request, 'crmapp/worker_update.html', context)
 
 
+@login_required
 @user_passes_test(lambda user: user.is_assistant or user.is_superuser or user.is_dir)
 def partners_view(request):
     title = 'Контрагенти'
@@ -76,6 +79,7 @@ def partners_view(request):
     return render(request, 'crmapp/partners_list.html', context)
 
 
+@login_required
 @user_passes_test(lambda user: user.is_assistant or user.is_superuser or user.is_dir)
 def partner_create_view(request):
     title = 'Додати контрагента'
@@ -100,6 +104,7 @@ def partner_create_view(request):
     return render(request, 'crmapp/partner_update.html', context)
 
 
+@login_required
 @user_passes_test(lambda user: user.is_assistant or user.is_superuser or user.is_dir)
 def partner_update_view(request, partner_pk):
     partner = get_object_or_404(Partner, pk=partner_pk)
@@ -124,6 +129,7 @@ def partner_update_view(request, partner_pk):
     return render(request, 'crmapp/partner_update.html', context)
 
 
+@login_required
 @user_passes_test(lambda user: user.is_assistant or user.is_superuser or user.is_dir)
 def partner_read_view(request, partner_pk):
     partner = get_object_or_404(Partner, pk=partner_pk)
@@ -137,6 +143,7 @@ def partner_read_view(request, partner_pk):
     return render(request, 'crmapp/partner_detail.html', context)
 
 
+@login_required
 @user_passes_test(lambda user: user.is_assistant or user.is_superuser or user.is_dir)
 def firms_view(request):
     title = 'Фірми'
@@ -150,6 +157,7 @@ def firms_view(request):
     return render(request, 'crmapp/firms_list.html', context)
 
 
+@login_required
 @user_passes_test(lambda user: user.is_assistant or user.is_superuser or user.is_dir)
 def firm_create_view(request):
     title = 'Додати фірму'
@@ -174,6 +182,7 @@ def firm_create_view(request):
     return render(request, 'crmapp/firm_update.html', context)
 
 
+@login_required
 @user_passes_test(lambda user: user.is_assistant or user.is_superuser or user.is_dir)
 def firm_read_view(request, firm_pk):
     firm = get_object_or_404(Firm, pk=firm_pk)
@@ -187,6 +196,7 @@ def firm_read_view(request, firm_pk):
     return render(request, 'crmapp/firm_detail.html', context)
 
 
+@login_required
 @user_passes_test(lambda user: user.is_assistant or user.is_superuser or user.is_dir)
 def firm_update_view(request, firm_pk):
     firm = get_object_or_404(Firm, pk=firm_pk)
@@ -211,6 +221,7 @@ def firm_update_view(request, firm_pk):
     return render(request, 'crmapp/firm_update.html', context)
 
 
+@login_required
 @user_passes_test(lambda user: user.is_assistant or user.is_superuser or user.is_dir)
 def services_view(request):
     title = 'Послуги'
@@ -224,6 +235,7 @@ def services_view(request):
     return render(request, 'crmapp/services_list.html', context)
 
 
+@login_required
 @user_passes_test(lambda user: user.is_assistant or user.is_superuser or user.is_dir)
 def service_create_view(request):
     title = 'Додати роботу/послугу'
@@ -246,6 +258,7 @@ def service_create_view(request):
     return render(request, 'crmapp/service_update.html', context)
 
 
+@login_required
 @user_passes_test(lambda user: user.is_assistant or user.is_superuser or user.is_dir)
 def service_update_view(request, service_pk):
     title = 'Редагувати послугу/роботу'

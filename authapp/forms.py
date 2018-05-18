@@ -39,7 +39,7 @@ class UserAdminUpdateForm(UserChangeForm):
         super(UserAdminUpdateForm, self).__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control'
-            field.help_text = ''
+            # field.help_text = ''
             if field_name == 'phone1':
                 field.help_text = 'Номер телефона: +380998887766'
             if field_name == 'avatar':
@@ -69,7 +69,8 @@ class UserUpdateForm(UserChangeForm):
         super(UserUpdateForm, self).__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control'
-            field.help_text = ''
+            if field_name == 'phone1':
+                field.help_text = 'приклад: +380998887766'
             if field_name == 'avatar':
                 field.widget.attrs['class'] = 'default'
             if field_name == 'is_active' or field_name == 'is_dir' or \

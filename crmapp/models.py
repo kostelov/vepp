@@ -34,7 +34,7 @@ class Partner(models.Model):
     edrpoy = models.CharField(verbose_name='єдрпоу', max_length=10, blank=True)
     dfro = models.CharField(verbose_name='дфро', max_length=15, blank=True)
     payment_account = models.CharField(verbose_name='розрахунковий рахунок', max_length=20, blank=True)
-    bank = models.ForeignKey(Bank, on_delete=models.CASCADE, verbose_name='банк', default='')
+    bank = models.ForeignKey(Bank, on_delete=models.PROTECT, verbose_name='банк', default='')
     cert_vat = models.CharField(verbose_name='свідоцтво платника пдв', max_length=15, blank=True)
     dir_name = models.CharField(verbose_name='директор', max_length=150, blank=True)
     responsible = models.CharField(verbose_name='відповідальна особа', max_length=150, blank=True)
@@ -60,7 +60,7 @@ class Firm(models.Model):
     edrpoy = models.CharField(verbose_name='єдрпоу', max_length=10, blank=True)
     dfro = models.CharField(verbose_name='дфро', max_length=15, blank=True)
     payment_account = models.CharField(verbose_name='розрахунковий рахунок', max_length=20, blank=True)
-    bank = models.ForeignKey(Bank, on_delete=models.CASCADE, verbose_name='банк', default='')
+    bank = models.ForeignKey(Bank, on_delete=models.PROTECT, verbose_name='банк', default='')
     cert_vat = models.CharField(verbose_name='свідоцтво платника пдв', max_length=15, blank=True)
     dir_name = models.CharField(verbose_name='директор', max_length=150, blank=True)
     phone1 = models.CharField(verbose_name='номер телефона', max_length=16, blank=True)
@@ -80,3 +80,18 @@ class Firm(models.Model):
 
 class Services(models.Model):
     name = models.CharField(verbose_name='послуга/робота', max_length=100, unique=True)
+
+
+class Contract(models.Model):
+    number = models.PositiveIntegerField(verbose_name='№ договору', unique=True)
+    date_start = models.DateField(verbose_name='дата укладання')
+    date_end = models.DateField(verbose_name='дата закінчення')
+    client = models.ForeignKey(Partner, related_name='partner', verbose_name='замовник', on_delete=models.PROTECT)
+    performer = models.ForeignKey(Firm, related_name='firm', verbose_name='виконавець', on_delete=models.PROTECT)
+    works = models.TextField(verbose_name='предмет договору', help_text='заповніть через ;', blank=True)
+    cost = models.DecimalField(verbose_name='вартість робіт', max_digits=10, decimal_places=2, blank=True,
+                               default='0.00')
+    district = models.CharField(verbose_name='район', max_length=50, blank=True)
+    town = models.CharField(verbose_name='населений пункт', max_length=50, blank=True)
+    address = models.CharField(verbose_name='адреса', max_length=50, blank=True)
+    note = models.TextField(verbose_name='примітка', blank=True)
