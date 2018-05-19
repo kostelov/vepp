@@ -1,10 +1,12 @@
+from datetime import datetime
+
 from django.shortcuts import render, get_object_or_404, HttpResponseRedirect, reverse
 from django.contrib.auth.decorators import login_required, user_passes_test
 
 from authapp.models import ProjectUser
 from authapp.forms import UserUpdateForm
-from crmapp.forms import PartnerCreateForm, FirmCreateForm, ServiceCreateForm
-from crmapp.models import Bank, Partner, Firm, Services
+from crmapp.forms import PartnerCreateForm, FirmCreateForm, ServiceCreateForm, ContractCreateForm
+from crmapp.models import Bank, Partner, Firm, Services, Contract
 
 
 @login_required
@@ -281,3 +283,83 @@ def service_update_view(request, service_pk):
     }
 
     return render(request, 'crmapp/service_update.html', context)
+
+
+@login_required
+@user_passes_test(lambda user: user.is_assistant or user.is_superuser or user.is_dir)
+def contracts_view(request):
+    title = 'Договора'
+    contracts = Contract.objects.all().order_by('-date_start')
+
+    context = {
+        'title': title,
+        'object_list': contracts,
+    }
+
+    return render(request, 'crmapp/contracts_list.html', context)
+
+
+@login_required
+@user_passes_test(lambda user: user.is_assistant or user.is_superuser or user.is_dir)
+def contract_create_view(request):
+    title = 'Додати договір'
+    client = Partner.objects.all().order_by('short_name')
+    performer = Firm.objects.all().order_by('short_name')
+    if request.method == 'POST':
+        form = ContractCreateForm(request.POST)
+        if form.is_valid():
+            try:
+                form.save()
+                return HttpResponseRedirect(reverse('crm:contracts'))
+            except Exception as e:
+                pass
+    else:
+        form = ContractCreateForm(initial={'client': client, 'performer': performer})
+
+    context = {
+        'title': title,
+        'form': form,
+        'client': client,
+        'performer': performer,
+    }
+
+    return render(request, 'crmapp/contract_update.html', context)
+
+
+@login_required
+@user_passes_test(lambda user: user.is_assistant or user.is_superuser or user.is_dir)
+def contract_read_view(request, contract_pk):
+    contract = get_object_or_404(Contract, pk=contract_pk)
+    dt = datetime.strftime(contract.date_start, '%d.%m.%Y')
+    title = f'Договір № {contract.number} від {dt} р.'
+
+    context = {
+        'title': title,
+        'object': contract,
+    }
+
+    return render(request, 'crmapp/contract_detail.html', context)
+
+
+@login_required
+@user_passes_test(lambda user: user.is_assistant or user.is_superuser or user.is_dir)
+def contract_update_view(request, contract_pk):
+    title = 'Редагувати договір'
+    contract = get_object_or_404(Contract, pk=contract_pk)
+    if request.method == 'POST':
+        form = ContractCreateForm(request.POST, instance=contract)
+        if form.is_valid():
+            try:
+                form.save()
+                return HttpResponseRedirect(reverse('crm:contracts'))
+            except Exception as e:
+                pass
+    else:
+        form = ContractCreateForm(instance=contract)
+
+    context = {
+        'title': title,
+        'form': form,
+    }
+
+    return render(request, 'crmapp/contract_update.html', context)
