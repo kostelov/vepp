@@ -3,7 +3,7 @@
 {% load tags %}
 
 {% block title %}
-    {{ title }} / {{ block.super }}
+{{ title }} / {{ block.super }}
 {% endblock %}
 
 {% block container %}
@@ -25,29 +25,31 @@
                 <header class="panel-heading">
                     {{ title }}
                 </header>
-                    <div class="panel-body" style="display: block;">
-                        <table class="table table-hover general-table">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Послуга/Робота</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            {% for object in object_list %}
-                                <tr>
-                                    <td>{{ object.id }}</td>
-                                    <td>{{ object.name }}</td>
-                                    <td>
-                                        <a href="{% url 'crm:service_update' object.pk%}" title="Редагувати">
-                                            <i class="fa fa-edit"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
+                <div class="panel-body" style="display: block;">
+                    <table class="table table-hover general-table">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Послуга/Робота</th>
+                            <th>Редагувати</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for object in object_list %}
+                        <tr>
+                            <td>{{ object.id }}</td>
+                            <td>{{ object.name }}</td>
+                            <td>
+                                <a style="display: block;" href="{% url 'crm:service_update' object.pk%}"
+                                   title="Редагувати">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </section>
         </div>
     </div>
