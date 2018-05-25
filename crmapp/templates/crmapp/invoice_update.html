@@ -1,0 +1,79 @@
+{% extends 'mainapp/base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+    {{ title }} / {{ block.super }}
+{% endblock %}
+
+{% block container %}
+<div class="row">
+    <div class="col-lg-8">
+        <section class="panel">
+            <header class="panel-heading">{{ title }}</header>
+            <div class="panel-body">
+                <div class="form">
+                    <form id="signupForm" class="form-horizontal" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label class="control-label col-lg-2">{{ form.num_invoice.label_tag }}</label>
+                            <div class="col-lg-2">
+                                {{ form.num_invoice }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-lg-2">{{ form.contract.label_tag }}</label>
+                            <div class="col-lg-2">
+                                {{ form.contract }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-lg-2">{{ form.date_create.label_tag }}</label>
+                            <div class="col-lg-2">
+                                {{ form.date_create }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-lg-2">{{ form.performer.label_tag }}</label>
+                            <div class="col-lg-6">
+                                {{ form.performer }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-lg-2">{{ form.payer.label_tag }}</label>
+                            <div class="col-lg-6">
+                                {{ form.payer }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-lg-2">{{ form.works.label_tag }}</label>
+                            <div class="col-lg-6">
+                                {{ form.works }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-lg-2">{{ form.quantity.label_tag }}</label>
+                            <div class="col-lg-2">
+                                {{ form.quantity }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-lg-2">{{ form.price.label_tag }}</label>
+                            <div class="col-lg-2">
+                                {{ form.price }}
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" type="submit">
+                            Зберегти
+                        </button>
+                        <a href="{% url 'crm:contracts' %}">
+                            <button class="btn btn-default" type="button">
+                                Назад
+                            </button>
+                        </a>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+{% endblock %}

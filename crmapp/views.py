@@ -5,8 +5,8 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 
 from authapp.models import ProjectUser
 from authapp.forms import UserUpdateForm
-from crmapp.forms import PartnerCreateForm, FirmCreateForm, ServiceCreateForm, ContractCreateForm
-from crmapp.models import Bank, Partner, Firm, Services, Contract
+from crmapp.forms import PartnerCreateForm, FirmCreateForm, ServiceCreateForm, ContractCreateForm, InvoiceCreateForm
+from crmapp.models import Bank, Partner, Firm, Services, Contract, Invoice
 
 
 @login_required
@@ -330,12 +330,14 @@ def contract_create_view(request):
 @user_passes_test(lambda user: user.is_assistant or user.is_superuser or user.is_dir)
 def contract_read_view(request, contract_pk):
     contract = get_object_or_404(Contract, pk=contract_pk)
+    invoice = Invoice.objects.filter(contract__pk=contract_pk).exclude(num_invoice=0)
     dt = datetime.strftime(contract.date_start, '%d.%m.%Y')
     title = f'Договір № {contract.number} від {dt} р.'
 
     context = {
         'title': title,
         'object': contract,
+        'invoice_list': invoice,
     }
 
     return render(request, 'crmapp/contract_detail.html', context)
@@ -363,3 +365,42 @@ def contract_update_view(request, contract_pk):
     }
 
     return render(request, 'crmapp/contract_update.html', context)
+
+
+@login_required
+@user_passes_test(lambda user: user.is_assistant or user.is_superuser or user.is_dir)
+def invoices_view(request):
+    pass
+
+
+@login_required
+@user_passes_test(lambda user: user.is_assistant or user.is_superuser or user.is_dir)
+def invoice_create_view(request, contract_pk):
+    title = 'Новий рахунок'
+    contract = get_object_or_404(Contract, pk=contract_pk)
+    # создаем счет с нулевым номером и добалвяем в бд
+    Invoice.objects.create(num_invoice=0, contract=contract, performer=contract.performer,
+                                     payer=contract.client, works=contract.works, price=contract.cost)
+    # выбираем созданный счет с нулевым номером и передаем в форму
+    invoice = Invoice.objects.filter(num_invoice=0, contract=contract).first()
+    if request.method == 'POST':
+        form =  InvoiceCreateForm(request.POST, instance=invoice)
+        if form.is_valid():
+            try:
+                form.save()
+                return HttpResponseRedirect(reverse('crm:contracts'))
+            except Exception as e:
+                pass
+    else:
+        form = InvoiceCreateForm(instance=invoice)
+        # данные в форме, удаляем "нулевой" счет
+        invoice.delete()
+
+    context = {
+        'title': title,
+        'contract': contract,
+        'invoice': invoice,
+        'form': form,
+    }
+
+    return render(request, 'crmapp/invoice_update.html', context)

@@ -96,14 +96,20 @@ class Contract(models.Model):
     address = models.CharField(verbose_name='адреса', max_length=50, blank=True)
     note = models.TextField(verbose_name='примітка', blank=True)
 
+    def __str__(self):
+        return str(self.number)
+
 
 class Invoice(models.Model):
-    num_invoice = models.PositiveIntegerField(verbose_name='№ рахунку', unique=True)
+    num_invoice = models.PositiveIntegerField(verbose_name='№ рахунку', blank=True)
     date_create = models.DateField(verbose_name='дата', auto_now_add=True)
+    contract = models.ForeignKey(Contract, related_name='contract', verbose_name='договір', on_delete=models.PROTECT)
     performer = models.ForeignKey(Firm, related_name='performer', verbose_name='виконавець', on_delete=models.PROTECT)
     payer = models.ForeignKey(Partner, related_name='payer', verbose_name='платник', on_delete=models.PROTECT)
-    contract = models.ForeignKey(Contract, related_name='contract', verbose_name='договір', on_delete=models.PROTECT)
     works = models.TextField(verbose_name='назва', blank=True)
     quantity = models.PositiveIntegerField(verbose_name='кількість', default=1)
     price = models.DecimalField(verbose_name='ціна', max_digits=10, decimal_places=2, blank=True,
                                 default='0.00')
+
+    def __str__(self):
+        return str(self.num_invoice)
