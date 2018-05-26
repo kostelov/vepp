@@ -1,0 +1,72 @@
+{% extends 'mainapp/base.html' %}
+{% load staticfiles %}
+{% load tags %}
+
+{% block title %}
+{{ title }} / {{ block.super }}
+{% endblock %}
+
+{% block container %}
+<div class="directory-info-row">
+    <div class="row">
+        <div class="col-lg-6">
+            <!--<a href="{% url 'crm:contract_create' %}">-->
+            <!--<button class="btn btn-primary" type="button"><i class="fa fa-plus"></i> Додати</button>-->
+            <!--</a>-->
+            <a href="{% url 'crm:main_crm' %}">
+                <button class="btn btn-default" type="button">Назад</button>
+            </a>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-lg-12">
+            <section class="panel">
+                <header class="panel-heading">
+                    {{ title }}
+                </header>
+                <div class="panel-body" style="display: block;">
+                    <table class="table table-hover general-table">
+                        <thead>
+                        <tr>
+                            <th>Рахунок №</th>
+                            <th>Дата</th>
+                            <th>Договір №</th>
+                            <th>Виконавець</th>
+                            <th>Замовник</th>
+                            <th>Сума, грн.</th>
+                            <!--<th>Оплачено</th>-->
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for object in object_list %}
+                        <tr style="{% if object.is_paid %} background: #99FFCC; {% else %} background: #FFCCCC; {% endif %}">
+                            <td>
+                                <a style="display: block; text-decoration: none;"
+                                   href="{% url 'crm:invoice_read' object.pk %}">{{ object.num_invoice }}</a>
+                            </td>
+                            <td><a style="display: block; text-decoration: none;"
+                                   href="{% url 'crm:invoice_read' object.pk %}">{{ object.date_create }}</a>
+                            </td>
+                            <td>{{ object.contract.number }}</td>
+                            <td>{{ object.performer }}</td>
+                            <td>{{ object.payer }}</td>
+                            <td>{{ object.price }}</td>
+                            <!--<td>-->
+                                <!--{% if object.is_paid %}-->
+                                <!--<i class="fa fa-check fa-lg" aria-hidden="true" title="Так"></i>-->
+                                <!--{% else %}-->
+                                <!--<i class="fa fa-times fa-lg" aria-hidden="true" title="Ні"></i>-->
+                                <!--{% endif %}-->
+                            <!--</td>-->
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

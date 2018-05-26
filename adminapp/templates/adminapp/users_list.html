@@ -46,20 +46,20 @@
                                 {% if not object.is_superuser %}
                                 <li>
                                     <a href="{% url 'admin:user_update' object.pk %}">
-                                        <i class="fa fa-edit" title="Редагувати"></i>
+                                        <i class="fa fa-edit" aria-hidden="true" title="Редагувати"></i>
                                     </a>
                                 </li>
                                 {% endif %}
                                 <li>
                                     <a href="{% url 'admin:user_detail' object.pk %}">
-                                        <i class="fa fa-eye" title="Переглянути"></i>
+                                        <i class="fa fa-eye" aria-hidden="true" title="Переглянути"></i>
                                     </a>
                                 </li>
                                 {% if user.is_superuser %}
                                 <li>
                                     {% if not object.is_superuser %}
                                     <a href="{% url 'admin:user_change_password' object.pk %}">
-                                        <i class="fa fa-key" title="Змінити пароль"></i>
+                                        <i class="fa fa-key" aria-hidden="true" title="Змінити пароль"></i>
                                     </a>
                                     {% endif %}
                                 </li>
@@ -67,11 +67,11 @@
                                     {% if not object.is_superuser %}
                                         {% if object.is_active %}
                                             <a href="{% url 'admin:user_delete' object.pk %}">
-                                                <i class="fa fa-times" title="Деактивувати"></i>
+                                                <i class="fa fa-lock" aria-hidden="true" title="Заблокувати"></i>
                                             </a>
                                         {% else %}
                                             <a href="{% url 'admin:user_activate' object.pk %}">
-                                                <i class="fa fa-check" title="Активувати"></i>
+                                                <i class="fa fa-unlock" aria-hidden="true" title="Разблокувати"></i>
                                             </a>
                                         {% endif %}
                                     {% endif %}

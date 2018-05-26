@@ -102,7 +102,7 @@ class Contract(models.Model):
 
 class Invoice(models.Model):
     num_invoice = models.PositiveIntegerField(verbose_name='№ рахунку', blank=True)
-    date_create = models.DateField(verbose_name='дата', auto_now_add=True)
+    date_create = models.DateField(verbose_name='дата')
     contract = models.ForeignKey(Contract, related_name='contract', verbose_name='договір', on_delete=models.PROTECT)
     performer = models.ForeignKey(Firm, related_name='performer', verbose_name='виконавець', on_delete=models.PROTECT)
     payer = models.ForeignKey(Partner, related_name='payer', verbose_name='платник', on_delete=models.PROTECT)
@@ -110,6 +110,7 @@ class Invoice(models.Model):
     quantity = models.PositiveIntegerField(verbose_name='кількість', default=1)
     price = models.DecimalField(verbose_name='ціна', max_digits=10, decimal_places=2, blank=True,
                                 default='0.00')
+    is_paid = models.BooleanField(verbose_name='оплачений', default=False)
 
     def __str__(self):
         return str(self.num_invoice)

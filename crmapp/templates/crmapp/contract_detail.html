@@ -89,14 +89,27 @@
                             <th>№</th>
                             <th>Дата</th>
                             <th>Сума, грн.</th>
+                            <th>Оплачено</th>
                         </tr>
                         </thead>
                         <tbody>
                         {% for invoice in invoice_list %}
                         <tr>
-                            <td>{{ invoice.num_invoice }}</td>
+                            <td>
+                                <a style="display: block; text-decoration: none;"
+                                   href="{% url 'crm:invoice_read' invoice.pk %}">
+                                    {{ invoice.num_invoice }}
+                                </a>
+                            </td>
                             <td>{{ invoice.date_create }}</td>
                             <td>{{ invoice.price }}</td>
+                            <td>
+                                {% if invoice.is_paid %}
+                                <i class="fa fa-check fa-lg" aria-hidden="true" title="Так"></i>
+                                {% else %}
+                                <i class="fa fa-times fa-lg" aria-hidden="true" title="Ні"></i>
+                                {% endif %}
+                            </td>
                         </tr>
                         {% endfor %}
                         </tbody>

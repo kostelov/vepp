@@ -370,7 +370,15 @@ def contract_update_view(request, contract_pk):
 @login_required
 @user_passes_test(lambda user: user.is_assistant or user.is_superuser or user.is_dir)
 def invoices_view(request):
-    pass
+    title = 'Рахунки'
+    invoices = Invoice.objects.all().order_by('is_paid').exclude(num_invoice=0)
+
+    context = {
+        'title': title,
+        'object_list': invoices,
+    }
+
+    return render(request, 'crmapp/invoices_list.html', context)
 
 
 @login_required
@@ -380,11 +388,11 @@ def invoice_create_view(request, contract_pk):
     contract = get_object_or_404(Contract, pk=contract_pk)
     # создаем счет с нулевым номером и добалвяем в бд
     Invoice.objects.create(num_invoice=0, contract=contract, performer=contract.performer,
-                                     payer=contract.client, works=contract.works, price=contract.cost)
+                           payer=contract.client, works=contract.works, price=contract.cost)
     # выбираем созданный счет с нулевым номером и передаем в форму
     invoice = Invoice.objects.filter(num_invoice=0, contract=contract).first()
     if request.method == 'POST':
-        form =  InvoiceCreateForm(request.POST, instance=invoice)
+        form = InvoiceCreateForm(request.POST, instance=invoice)
         if form.is_valid():
             try:
                 form.save()
@@ -400,6 +408,45 @@ def invoice_create_view(request, contract_pk):
         'title': title,
         'contract': contract,
         'invoice': invoice,
+        'form': form,
+    }
+
+    return render(request, 'crmapp/invoice_update.html', context)
+
+
+@login_required
+@user_passes_test(lambda user: user.is_assistant or user.is_superuser or user.is_dir)
+def invoice_read_view(request, invoice_pk):
+    invoice = get_object_or_404(Invoice, pk=invoice_pk)
+    dt = datetime.strftime(invoice.date_create, '%d.%m.%Y')
+    title = f'Рахунок №{invoice.num_invoice} від {dt} р.'
+
+    context = {
+        'title': title,
+        'object': invoice,
+    }
+
+    return render(request, 'crmapp/invoice_detail.html', context)
+
+
+@login_required
+@user_passes_test(lambda user: user.is_assistant or user.is_superuser or user.is_dir)
+def invoice_update_view(request, invoice_pk):
+    title = 'Редагувати рахунок'
+    invoice = get_object_or_404(Invoice, pk=invoice_pk)
+    if request.method == 'POST':
+        form = InvoiceCreateForm(request.POST, instance=invoice)
+        if form.is_valid():
+            try:
+                form.save()
+                return HttpResponseRedirect(reverse('crm:invoices'))
+            except Exception as e:
+                pass
+    else:
+        form = InvoiceCreateForm(instance=invoice)
+
+    context = {
+        'title': title,
         'form': form,
     }
 

@@ -1,0 +1,14 @@
+{% load staticfiles %}
+
+<ul class="notification-menu" style="margin: 0;">
+    <li>
+        <a class="btn btn-default dropdown-toggle info-number" type="button" href="{% url 'crm:partners' %}">
+            <i class="fa fa-users fa-lg"></i>
+        </a>
+    </li>
+    <li>
+        <a class="btn btn-default dropdown-toggle info-number" type="button" href="{% url 'crm:contracts' %}">
+            <i class="fa fa-briefcase fa-lg"></i>
+        </a>
+    </li>
+</ul>

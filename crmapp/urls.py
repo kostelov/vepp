@@ -29,6 +29,10 @@ urlpatterns = [
     re_path(r'^contract/read/(?P<contract_pk>\d+)/$', crmapp.contract_read_view, name='contract_read'),
     re_path(r'^contract/update/(?P<contract_pk>\d+)/$', crmapp.contract_update_view, name='contract_update'),
     # счета
-    # re_path(r'^invoices/$', crmapp.invoices_view, name='invoices'),
+    re_path(r'^invoices/$', crmapp.invoices_view, name='invoices'),
     re_path(r'^invoice/create/(?P<contract_pk>\d+)$', crmapp.invoice_create_view, name='invoice_create'),
+    re_path(r'^invoice/read/(?P<invoice_pk>\d+)$', crmapp.invoice_read_view, name='invoice_read'),
+    re_path(r'^invoice/update/(?P<invoice_pk>\d+)$', crmapp.invoice_update_view, name='invoice_update'),
+    # акты
+    re_path(r'^invoices/$', crmapp.invoices_view, name='invoices'),
 ]
