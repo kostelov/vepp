@@ -10,6 +10,7 @@ from authapp.forms import UserFormLogin
 def login(request):
     title = 'Вхід'
     form = UserFormLogin()
+    # next = request.GET['next'] if 'next' in request.GET.keys() else ''
     if request.method == 'POST':
         form = UserFormLogin(data=request.POST)
         if form.is_valid():

@@ -350,6 +350,7 @@ def contract_update_view(request, contract_pk):
     contract = get_object_or_404(Contract, pk=contract_pk)
     if request.method == 'POST':
         form = ContractCreateForm(request.POST, instance=contract)
+        # print(request.POST.get('cost'))
         if form.is_valid():
             try:
                 form.save()
@@ -365,6 +366,11 @@ def contract_update_view(request, contract_pk):
     }
 
     return render(request, 'crmapp/contract_update.html', context)
+
+
+# @login_required
+# @user_passes_test(lambda user: user.is_assistant or user.is_superuser or user.is_dir)
+# def contract_edit_view(request, price, )
 
 
 @login_required

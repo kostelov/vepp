@@ -91,6 +91,9 @@ class Contract(models.Model):
     works = models.TextField(verbose_name='предмет договору', help_text='заповніть через ;', blank=True)
     cost = models.DecimalField(verbose_name='вартість робіт', max_digits=10, decimal_places=2, blank=True,
                                default='0.00')
+    vat = models.DecimalField(verbose_name='ПДВ', max_digits=10, decimal_places=2, blank=True, default='0.00')
+    cost_vat = models.DecimalField(verbose_name='вартість з ПДВ', max_digits=10, decimal_places=2, blank=True,
+                                   default='0.00')
     district = models.CharField(verbose_name='район', max_length=50, blank=True)
     town = models.CharField(verbose_name='населений пункт', max_length=50, blank=True)
     address = models.CharField(verbose_name='адреса', max_length=50, blank=True)
@@ -114,3 +117,8 @@ class Invoice(models.Model):
 
     def __str__(self):
         return str(self.num_invoice)
+
+    # @property
+    # def vat(self):
+    #     price = float(self.price)
+    #     return price * 0.2
