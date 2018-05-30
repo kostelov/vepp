@@ -110,21 +110,21 @@ class Contract(models.Model):
         cost_vat = Decimal(Decimal(cost) * Decimal(1.2)).quantize(Decimal('.00'))
         client = Partner.objects.filter(pk=int(request.get('client'))).first()
         performer = Firm.objects.filter(pk=int(request.get('performer'))).first()
-        contract = Contract(
-            number = request.get('number'),
-            date_start = request.get('date_start'),
-            date_end = request.get('date_end'),
-            client = client,
-            performer = performer,
-            works = request.get('works'),
-            cost = cost,
-            vat = vat,
-            cost_vat = cost_vat,
-            district = request.get('district'),
-            town = request.get('town'),
-            address = request.get('address'),
-            note = request.get('note')
-        )
+        contract = {
+            'number': request.get('number'),
+            'date_start': request.get('date_start'),
+            'date_end': request.get('date_end'),
+            'client': client,
+            'performer': performer,
+            'works': request.get('works'),
+            'cost': cost,
+            'vat': vat,
+            'cost_vat': cost_vat,
+            'district': request.get('district'),
+            'town': request.get('town'),
+            'address': request.get('address'),
+            'note': request.get('note'),
+        }
         return contract
 
 

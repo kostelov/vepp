@@ -374,12 +374,9 @@ def contract_update_view(request, contract_pk):
 @user_passes_test(lambda user: user.is_assistant or user.is_superuser or user.is_dir)
 def contract_edit_view(request):
     if request.is_ajax() and request.method == 'POST':
-        # if request.is_ajax():
-        # print(request.POST.get('client'), request.POST.get('performer'))
-        contract = Contract.get_contract(request.POST)
-        print(contract.vat)
         # присвоить значение каждого поля, затем передать в форму
-        form = ContractCreateForm(request.POST, instance=contract)
+        contract = Contract.get_contract(request.POST)
+        form = ContractCreateForm(contract)
     else:
         form = ContractCreateForm()
 
