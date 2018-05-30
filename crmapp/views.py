@@ -1,5 +1,4 @@
 from datetime import datetime
-from decimal import *
 
 from django.shortcuts import render, get_object_or_404, HttpResponseRedirect, reverse
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -375,19 +374,19 @@ def contract_update_view(request, contract_pk):
 @user_passes_test(lambda user: user.is_assistant or user.is_superuser or user.is_dir)
 def contract_edit_view(request):
     if request.is_ajax() and request.method == 'POST':
-    # if request.is_ajax():
-        print(request.POST.get('number'), request.POST.get('cost'))
-        contract = Contract()
-        contract.number = request.POST.get('number')
+        # if request.is_ajax():
+        # print(request.POST.get('client'), request.POST.get('performer'))
+        contract = Contract.get_contract(request.POST)
+        print(contract.vat)
         # присвоить значение каждого поля, затем передать в форму
-        form = ContractCreateForm(request.POST)
+        form = ContractCreateForm(request.POST, instance=contract)
     else:
         form = ContractCreateForm()
 
     context = {
         'form': form,
     }
-    result = render_to_string('crmapp/includes/inc_form_contract_update.html', context)
+    result = render_to_string('crmapp/includes/inc_form_contract_update.html', context, request)
 
     return JsonResponse({'result': result})
 

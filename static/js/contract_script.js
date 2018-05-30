@@ -4,7 +4,7 @@ window.onload = function () {
 
         $.ajax({
             url: "/crm/contract/edit/",
-            method: "GET",
+            type: "POST",
             data: $('#signupForm').serialize(),
             success: function(data) {
                 $('form').html(data.result);

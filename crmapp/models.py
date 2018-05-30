@@ -3,6 +3,7 @@ from crmapp.management.commands import log_config
 from crmapp.management.commands.loger import Log
 
 from django.db import models
+from decimal import *
 
 logger = logging.getLogger('update')
 log = Log(logger)
@@ -101,6 +102,30 @@ class Contract(models.Model):
 
     def __str__(self):
         return str(self.number)
+
+    @staticmethod
+    def get_contract(request):
+        cost = request.get('cost')
+        vat = Decimal(Decimal(cost) * Decimal(0.2)).quantize(Decimal('.00'))
+        cost_vat = Decimal(Decimal(cost) * Decimal(1.2)).quantize(Decimal('.00'))
+        client = Partner.objects.filter(pk=int(request.get('client'))).first()
+        performer = Firm.objects.filter(pk=int(request.get('performer'))).first()
+        contract = Contract(
+            number = request.get('number'),
+            date_start = request.get('date_start'),
+            date_end = request.get('date_end'),
+            client = client,
+            performer = performer,
+            works = request.get('works'),
+            cost = cost,
+            vat = vat,
+            cost_vat = cost_vat,
+            district = request.get('district'),
+            town = request.get('town'),
+            address = request.get('address'),
+            note = request.get('note')
+        )
+        return contract
 
 
 class Invoice(models.Model):
