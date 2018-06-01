@@ -171,3 +171,40 @@ class Invoice(models.Model):
         }
 
         return invoice
+
+
+class Act(models.Model):
+    num_act = models.PositiveIntegerField(verbose_name='№ акту')
+    date_create = models.DateField(verbose_name='дата', default=datetime.strftime(datetime.today(), '%Y-%m-%d'))
+    contract = models.ForeignKey(Contract, related_name='act_contract', verbose_name='договір',
+                                 on_delete=models.PROTECT)
+    performer = models.ForeignKey(Firm, related_name='act_performer', verbose_name='виконавець',
+                                  on_delete=models.PROTECT)
+    client = models.ForeignKey(Partner, related_name='act_partner', verbose_name='замовник', on_delete=models.PROTECT)
+    agent_firm = models.CharField(verbose_name='представник виконавця', max_length=150)
+    agent_client = models.CharField(verbose_name='представник замовника', max_length=150)
+    works = models.TextField(verbose_name='назва робіти, послуг', blank=True)
+    quantity = models.PositiveIntegerField(verbose_name='кількість', default=1)
+    price = models.DecimalField(verbose_name='ціна', max_digits=10, decimal_places=2, blank=True,
+                                default='0.00')
+    vat = models.DecimalField(verbose_name='ПДВ', max_digits=10, decimal_places=2, blank=True, default='0.00')
+    price_vat = models.DecimalField(verbose_name='ціна з ПДВ', max_digits=10, decimal_places=2, blank=True,
+                                    default='0.00')
+
+    def __str__(self):
+        return str(self.num_act)
+
+    @staticmethod
+    def act_create(contract):
+        act = Act(
+            num_act=0,
+            date_create=datetime.strftime(datetime.today(), '%d.%m.%Y'),
+            contract=Contract.objects.filter(pk=int(contract.pk)).first(),
+            performer=Firm.objects.filter(pk=int(contract.performer.pk)).first(),
+            client=Partner.objects.filter(pk=int(contract.client.pk)).first(),
+            works=contract.works,
+            price = contract.cost,
+            vat=contract.vat,
+            price_vat=contract.cost_vat
+        )
+        return act

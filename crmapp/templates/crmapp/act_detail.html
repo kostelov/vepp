@@ -1,0 +1,80 @@
+{% extends 'mainapp/base.html' %}
+{% load staticfiles %}
+{% load tags %}
+
+{% block title %}
+    {{ title }} / {{ block.super }}
+{% endblock %}
+
+{% block container %}
+<div class="row">
+    <div class="col-lg-6">
+        <a href="{% url 'crm:act_update' object.pk %}">
+            <button class="btn btn-primary" type="button">Редагувати</button>
+        </a>
+        <a href="{% url 'crm:acts' %}">
+            <button class="btn btn-default" type="button">Назад</button>
+        </a>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-lg-6">
+        <section class="panel">
+            <header class="panel-heading">
+                Основна інформація
+            </header>
+            <div class="panel-body">
+                <ul class="p-info">
+                    <li>
+                        <div class="title">№ акту</div>
+                        <div class="desk">{{ object.num_act }}</div>
+                    </li>
+                    <li>
+                        <div class="title">Дата</div>
+                        <div class="desk">{{ object.date_create }}</div>
+                    </li>
+                    <li>
+                        <div class="title">Виконавець</div>
+                        <div class="desk">{{ object.performer }}</div>
+                    </li>
+                    <li>
+                        <div class="title">Представник виконавця</div>
+                        <div class="desk">{{ object.agent_firm }}</div>
+                    </li>
+                    <li>
+                        <div class="title">Замовник</div>
+                        <div class="desk">{{ object.client }}</div>
+                    </li>
+                    <li>
+                        <div class="title">Представник замовника</div>
+                        <div class="desk">{{ object.agent_client }}</div>
+                    </li>
+                    <li>
+                        <div class="title">Роботи</div>
+                        <div class="desk">{{ object.works }}</div>
+                    </li>
+                    <li>
+                        <div class="title">№ договору</div>
+                        <div class="desk">{{ object.contract.number }}</div>
+                    </li>
+                    <li>
+                        <div class="title">Сума</div>
+                        <div class="desk">{{ object.price }}&nbsp;грн.</div>
+                    </li>
+                    <!--<li>-->
+                        <!--<div class="title">Оплачено</div>-->
+                        <!--<div class="desk">-->
+                            <!--{% if object.is_paid %}-->
+                            <!--<i class="fa fa-check fa-lg" aria-hidden="true"></i>-->
+                            <!--{% else %}-->
+                            <!--<i class="fa fa-times fa-lg" aria-hidden="true" style="color: #FF6666;"></i>-->
+                            <!--{% endif %}-->
+                        <!--</div>-->
+                    <!--</li>-->
+                </ul>
+            </div>
+        </section>
+    </div>
+</div>
+{% endblock %}

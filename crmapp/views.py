@@ -7,8 +7,9 @@ from django.http import JsonResponse
 
 from authapp.models import ProjectUser
 from authapp.forms import UserUpdateForm
-from crmapp.forms import PartnerCreateForm, FirmCreateForm, ServiceCreateForm, ContractCreateForm, InvoiceCreateForm
-from crmapp.models import Bank, Partner, Firm, Services, Contract, Invoice
+from crmapp.forms import PartnerCreateForm, FirmCreateForm, ServiceCreateForm, ContractCreateForm, InvoiceCreateForm, \
+    ActCreateForm
+from crmapp.models import Bank, Partner, Firm, Services, Contract, Invoice, Act
 
 
 @login_required
@@ -333,6 +334,7 @@ def contract_create_view(request):
 def contract_read_view(request, contract_pk):
     contract = get_object_or_404(Contract, pk=contract_pk)
     invoice = Invoice.objects.filter(contract__pk=contract_pk).exclude(num_invoice=0)
+    act = Act.objects.filter(contract__pk=contract_pk).exclude(num_act=0)
     dt = datetime.strftime(contract.date_start, '%d.%m.%Y')
     title = f'Договір № {contract.number} від {dt} р.'
 
@@ -340,6 +342,7 @@ def contract_read_view(request, contract_pk):
         'title': title,
         'object': contract,
         'invoice_list': invoice,
+        'act_list': act,
     }
 
     return render(request, 'crmapp/contract_detail.html', context)
@@ -490,3 +493,82 @@ def invoice_edit_view(request):
     result = render_to_string('crmapp/includes/inc_form_invoice_update.html', context, request)
 
     return JsonResponse({'result': result})
+
+
+@login_required
+@user_passes_test(lambda user: user.is_assistant or user.is_superuser or user.is_dir)
+def acts_view(request):
+    title = 'Акти виконаних робіт'
+    acts = Act.objects.all().order_by('date_create').exclude(num_act=0)
+
+    context = {
+        'title': title,
+        'object_list': acts,
+    }
+
+    return render(request, 'crmapp/acts_list.html', context)
+
+
+@login_required
+@user_passes_test(lambda user: user.is_assistant or user.is_superuser or user.is_dir)
+def act_create_view(request, contract_pk):
+    title = 'Акт виконаних робіт'
+    contract = get_object_or_404(Contract, pk=contract_pk)
+    act = Act.act_create(contract)
+    if request.method == 'POST':
+        form = ActCreateForm(request.POST, instance=act)
+        if form.is_valid():
+            try:
+                form.save()
+                return HttpResponseRedirect(reverse('crm:contract_read', kwargs={'contract_pk': contract.pk}))
+            except Exception as e:
+                pass
+    else:
+        form = ActCreateForm(instance=act)
+
+    context = {
+        'title': title,
+        'form': form,
+        'act': act,
+    }
+
+    return render(request, 'crmapp/act_update.html', context)
+
+
+@login_required
+@user_passes_test(lambda user: user.is_assistant or user.is_superuser or user.is_dir)
+def act_read_view(request, act_pk):
+    act = get_object_or_404(Act, pk=act_pk)
+    dt = datetime.strftime(act.date_create, '%d.%m.%Y')
+    title = f'Акт №{act.num_act} від {dt} р.'
+
+    context = {
+        'title': title,
+        'object': act,
+    }
+
+    return render(request, 'crmapp/act_detail.html', context)
+
+
+@login_required
+@user_passes_test(lambda user: user.is_assistant or user.is_superuser or user.is_dir)
+def act_update_view(request, act_pk):
+    title = 'Редагувати акт'
+    act = get_object_or_404(Act, pk=act_pk)
+    if request.method == 'POST':
+        form = ActCreateForm(request.POST, instance=act)
+        if form.is_valid():
+            try:
+                form.save()
+                return HttpResponseRedirect(reverse('crm:acts'))
+            except Exception as e:
+                pass
+    else:
+        form = ActCreateForm(instance=act)
+
+    context = {
+        'title': title,
+        'form': form,
+    }
+
+    return render(request, 'crmapp/act_update.html', context)

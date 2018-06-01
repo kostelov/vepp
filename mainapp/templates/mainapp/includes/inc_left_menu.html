@@ -30,10 +30,10 @@
             <li class="{% if request.resolver_match.url_name == 'invoices' or request.resolver_match.url_name == 'invoice_update' or request.resolver_match.url_name == 'invoice_read' %} active {% endif %}">
                 <a href="{% url 'crm:invoices' %}"> Рахунки</a>
             </li>
-            <li class="{% if request.resolver_match.url_name == 'user_create' %} active {% endif %}">
-                <a href="{#% url 'admin:user_create' %#}"> Акти</a>
+            <li class="{% if request.resolver_match.url_name == 'acts' or request.resolver_match.url_name == 'act_update' or request.resolver_match.url_name == 'act_read' %} active {% endif %}">
+                <a href="{% url 'crm:acts' %}"> Акти</a>
             </li>
-            <li class="{% if request.resolver_match.url_name == 'firms' %} active {% endif %}">
+            <li class="{% if request.resolver_match.url_name == 'firms' or request.resolver_match.url_name == 'firm_create' or request.resolver_match.url_name == 'firm_update' or request.resolver_match.url_name == 'firm_read' %} active {% endif %}">
                 <a href="{% url 'crm:firms' %}"> Фірми</a>
             </li>
             <li class="{% if request.resolver_match.url_name == 'services' %} active {% endif %}">

@@ -13,7 +13,10 @@
             <button class="btn btn-primary" type="button">Редагувати</button>
         </a>
         <a href="{% url 'crm:invoice_create' object.pk %}">
-            <button class="btn btn-primary" type="button">Створити рахунок</button>
+            <button class="btn btn-primary" type="button">Рахунок</button>
+        </a>
+        <a href="{% url 'crm:act_create' object.pk %}">
+            <button class="btn btn-primary" type="button">Акт</button>
         </a>
         <a href="{% url 'crm:contracts' %}">
             <button class="btn btn-default" type="button">Назад</button>
@@ -119,6 +122,38 @@
                         </tbody>
                     </table>
                 </div>
+        </section>
+    </div>
+    <div class="col-lg-6">
+        <section class="panel">
+            <header class="panel-heading">
+                Акти
+            </header>
+            <div class="panel-body" style="display: block;">
+                <table class="table table-hover general-table">
+                    <thead>
+                    <tr>
+                        <th>№</th>
+                        <th>Дата</th>
+                        <th>Сума, грн.</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for act in act_list %}
+                    <tr>
+                        <td>
+                            <a style="display: block; text-decoration: none;"
+                               href="{% url 'crm:act_read' act.pk %}">
+                                {{ act.num_act }}
+                            </a>
+                        </td>
+                        <td>{{ act.date_create }}</td>
+                        <td>{{ act.price }}</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </section>
     </div>
 </div>

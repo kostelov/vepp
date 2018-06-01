@@ -1,0 +1,21 @@
+{% extends 'mainapp/base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+    {{ title }} / {{ block.super }}
+{% endblock %}
+
+{% block container %}
+<div class="row">
+    <div class="col-lg-8">
+        <section class="panel">
+            <header class="panel-heading">{{ title }}</header>
+            <div class="panel-body">
+                <div class="form">
+                    {% include 'crmapp/includes/inc_form_act_update.html' %}
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+{% endblock %}
