@@ -1,0 +1,91 @@
+<div class="form">
+    <form id="signupForm" class="form-horizontal" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label class="control-label col-lg-2">{{ form.num_invoice.label_tag }}</label>
+            <div class="col-lg-2">
+                {{ form.num_invoice }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-lg-2">{{ form.contract.label_tag }}</label>
+            <div class="col-lg-2">
+                {{ form.contract }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-lg-2">{{ form.date_create.label_tag }}</label>
+            <div class="col-md-2 col-xs-11">
+                <div data-date-viewmode="day" data-date-format="dd.mm.yyyy" data-date="12-02-2012"
+                     class="input-append date dpYears">
+                    {{ form.date_create }}
+                    <span class="input-group-btn add-on">
+                                        <button class="btn btn-primary" type="button">
+                                            <i class="fa fa-calendar"></i>
+                                        </button>
+                                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-lg-2">{{ form.performer.label_tag }}</label>
+            <div class="col-lg-6">
+                {{ form.performer }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-lg-2">{{ form.payer.label_tag }}</label>
+            <div class="col-lg-6">
+                {{ form.payer }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-lg-2">{{ form.works.label_tag }}</label>
+            <div class="col-lg-6">
+                {{ form.works }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-lg-2">{{ form.quantity.label_tag }}</label>
+            <div class="col-lg-2">
+                {{ form.quantity }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-lg-2">{{ form.price.label_tag }}</label>
+            <div class="col-lg-2">
+                {{ form.price }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-lg-2">{{ form.vat.label_tag }}</label>
+            <div class="col-lg-2">
+                {{ form.vat }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-lg-2">{{ form.price_vat.label_tag }}</label>
+            <div class="col-lg-2">
+                {{ form.price_vat }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-lg-2">{{ form.is_paid.label_tag }}</label>
+            <div class="col-sm-9 icheck">
+                <div class="flat-green single-row">
+                    <div class="radio">
+                        {{ form.is_paid }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-primary" type="submit">
+            Зберегти
+        </button>
+        <a href="{% url 'crm:invoices' %}">
+            <button class="btn btn-default" type="button">
+                Назад
+            </button>
+        </a>
+    </form>
+</div>

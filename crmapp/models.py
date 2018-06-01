@@ -3,7 +3,9 @@ from crmapp.management.commands import log_config
 from crmapp.management.commands.loger import Log
 
 from django.db import models
+
 from decimal import *
+from datetime import datetime
 
 logger = logging.getLogger('update')
 log = Log(logger)
@@ -130,7 +132,7 @@ class Contract(models.Model):
 
 class Invoice(models.Model):
     num_invoice = models.PositiveIntegerField(verbose_name='№ рахунку', blank=True)
-    date_create = models.DateField(verbose_name='дата')
+    date_create = models.DateField(verbose_name='дата', default=datetime.strftime(datetime.today(), '%Y-%m-%d'))
     contract = models.ForeignKey(Contract, related_name='contract', verbose_name='договір', on_delete=models.PROTECT)
     performer = models.ForeignKey(Firm, related_name='performer', verbose_name='виконавець', on_delete=models.PROTECT)
     payer = models.ForeignKey(Partner, related_name='payer', verbose_name='платник', on_delete=models.PROTECT)
@@ -138,12 +140,34 @@ class Invoice(models.Model):
     quantity = models.PositiveIntegerField(verbose_name='кількість', default=1)
     price = models.DecimalField(verbose_name='ціна', max_digits=10, decimal_places=2, blank=True,
                                 default='0.00')
+    vat = models.DecimalField(verbose_name='ПДВ', max_digits=10, decimal_places=2, blank=True, default='0.00')
+    price_vat = models.DecimalField(verbose_name='ціна з ПДВ', max_digits=10, decimal_places=2, blank=True,
+                                    default='0.00')
     is_paid = models.BooleanField(verbose_name='оплачений', default=False)
 
     def __str__(self):
         return str(self.num_invoice)
 
-    # @property
-    # def vat(self):
-    #     price = float(self.price)
-    #     return price * 0.2
+    @staticmethod
+    def get_invoice(request):
+        price = request.get('price')
+        vat = Decimal(Decimal(price) * Decimal(0.2)).quantize(Decimal('.00'))
+        price_vat = Decimal(Decimal(price) * Decimal(1.2)).quantize(Decimal('.00'))
+        contract = Contract.objects.filter(pk=int(request.get('contract'))).first()
+        performer = Firm.objects.filter(pk=int(request.get('performer'))).first()
+        payer = Partner.objects.filter(pk=int(request.get('payer'))).first()
+        invoice = {
+            'num_invoice': request.get('num_invoice'),
+            'date_create': request.get('date_create'),
+            'contract': contract,
+            'performer': performer,
+            'payer': payer,
+            'works': request.get('works'),
+            'quantity': request.get('quantity'),
+            'price': price,
+            'vat': vat,
+            'price_vat': price_vat,
+            'is_paid': request.get('is_paid'),
+        }
+
+        return invoice

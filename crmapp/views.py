@@ -472,3 +472,21 @@ def invoice_update_view(request, invoice_pk):
     }
 
     return render(request, 'crmapp/invoice_update.html', context)
+
+
+@login_required
+@user_passes_test(lambda user: user.is_assistant or user.is_superuser or user.is_dir)
+def invoice_edit_view(request):
+    if request.is_ajax() and request.method == 'POST':
+        # присвоить значение каждого поля, затем передать в форму
+        invoice = Invoice.get_invoice(request.POST)
+        form = InvoiceCreateForm(invoice)
+    else:
+        form = InvoiceCreateForm()
+
+    context = {
+        'form': form,
+    }
+    result = render_to_string('crmapp/includes/inc_form_invoice_update.html', context, request)
+
+    return JsonResponse({'result': result})

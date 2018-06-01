@@ -63,3 +63,5 @@ class InvoiceCreateForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control'
+            if field_name == 'vat' or field_name == 'price_vat':
+                field.widget.attrs['readonly'] = ''
