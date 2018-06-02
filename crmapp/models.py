@@ -149,6 +149,21 @@ class Invoice(models.Model):
         return str(self.num_invoice)
 
     @staticmethod
+    def invoice_create(contract):
+        invoice = Invoice(
+            num_invoice=0,
+            date_create=datetime.strftime(datetime.today(), '%d.%m.%Y'),
+            contract=Contract.objects.filter(pk=int(contract.pk)).first(),
+            performer=Firm.objects.filter(pk=int(contract.performer.pk)).first(),
+            payer=Partner.objects.filter(pk=int(contract.client.pk)).first(),
+            works=contract.works,
+            price=contract.cost,
+            vat=contract.vat,
+            price_vat=contract.cost_vat
+        )
+        return invoice
+
+    @staticmethod
     def get_invoice(request):
         price = request.get('price')
         vat = Decimal(Decimal(price) * Decimal(0.2)).quantize(Decimal('.00'))
@@ -203,7 +218,7 @@ class Act(models.Model):
             performer=Firm.objects.filter(pk=int(contract.performer.pk)).first(),
             client=Partner.objects.filter(pk=int(contract.client.pk)).first(),
             works=contract.works,
-            price = contract.cost,
+            price=contract.cost,
             vat=contract.vat,
             price_vat=contract.cost_vat
         )

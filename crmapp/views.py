@@ -410,23 +410,18 @@ def invoices_view(request):
 def invoice_create_view(request, contract_pk):
     title = 'Новий рахунок'
     contract = get_object_or_404(Contract, pk=contract_pk)
-    # создаем счет с нулевым номером и добалвяем в бд
-    Invoice.objects.create(num_invoice=0, contract=contract, performer=contract.performer,
-                           payer=contract.client, works=contract.works, price=contract.cost)
-    # выбираем созданный счет с нулевым номером и передаем в форму
-    invoice = Invoice.objects.filter(num_invoice=0, contract=contract).first()
+    # формируем счет на основании договора без добавления в бд и передаем в форму
+    invoice = Invoice.invoice_create(contract)
     if request.method == 'POST':
         form = InvoiceCreateForm(request.POST, instance=invoice)
         if form.is_valid():
             try:
                 form.save()
-                return HttpResponseRedirect(reverse('crm:contracts'))
+                return HttpResponseRedirect(reverse('crm:contract_read', kwargs={'contract_pk':contract.pk}))
             except Exception as e:
                 pass
     else:
         form = InvoiceCreateForm(instance=invoice)
-        # данные в форме, удаляем "нулевой" счет
-        invoice.delete()
 
     context = {
         'title': title,
@@ -514,6 +509,7 @@ def acts_view(request):
 def act_create_view(request, contract_pk):
     title = 'Акт виконаних робіт'
     contract = get_object_or_404(Contract, pk=contract_pk)
+    # формируем акт на основании договора без добавления в бд и передаем в форму
     act = Act.act_create(contract)
     if request.method == 'POST':
         form = ActCreateForm(request.POST, instance=act)
