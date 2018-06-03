@@ -1,0 +1,77 @@
+{% extends 'mainapp/base.html' %}
+{% load staticfiles %}
+{% load tags %}
+
+{% block title %}
+    {{ title }} / {{ block.super }}
+{% endblock %}
+
+{% block container %}
+<div class="row">
+    <div class="col-lg-6">
+        <a href="{% url 'crm:project_update' object.pk %}">
+            <button class="btn btn-primary" type="button">Редагувати</button>
+        </a>
+        <a href="{% url 'crm:projects' %}">
+            <button class="btn btn-default" type="button">Назад</button>
+        </a>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-lg-6">
+        <section class="panel">
+            <header class="panel-heading">
+                Основна інформація
+            </header>
+            <div class="panel-body">
+                <ul class="p-info">
+                    <li>
+                        <div class="title">№ проекту</div>
+                        <div class="desk">{{ object.pk }}</div>
+                    </li>
+                    <li>
+                        <div class="title">№ договору</div>
+                        <div class="desk">{{ object.contract.number }}</div>
+                    </li>
+                    <li>
+                        <div class="title">Дата створення</div>
+                        <div class="desk">{{ object.date_create }}</div>
+                    </li>
+                    <li>
+                        <div class="title">Змінено</div>
+                        <div class="desk">{{ object.date_change }}</div>
+                    </li>
+                    <li>
+                        <div class="title">Дата завершення</div>
+                        <div class="desk">{{ object.date_end }}</div>
+                    </li>
+                    <li>
+                        <div class="title">Виконано</div>
+                        <div class="desk">
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-success" role="progressbar"
+                                     aria-valuenow="{{ object.status }}" aria-valuemin="0"
+                                     aria-valuemax="100" style="width: {{ object.status }}%;">
+                                    <!--<span class="sr-only">60% Complete</span>-->
+                                    {{ object.status }}%
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <!--<li>-->
+                        <!--<div class="title">Оплачено</div>-->
+                        <!--<div class="desk">-->
+                            <!--{% if object.is_paid %}-->
+                            <!--<i class="fa fa-check fa-lg" aria-hidden="true"></i>-->
+                            <!--{% else %}-->
+                            <!--<i class="fa fa-times fa-lg" aria-hidden="true" style="color: #FF6666;"></i>-->
+                            <!--{% endif %}-->
+                        <!--</div>-->
+                    <!--</li>-->
+                </ul>
+            </div>
+        </section>
+    </div>
+</div>
+{% endblock %}

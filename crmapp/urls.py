@@ -40,4 +40,10 @@ urlpatterns = [
     re_path(r'^act/create/(?P<contract_pk>\d+)/$', crmapp.act_create_view, name='act_create'),
     re_path(r'^act/read/(?P<act_pk>\d+)/$', crmapp.act_read_view, name='act_read'),
     re_path(r'^act/update/(?P<act_pk>\d+)/$', crmapp.act_update_view, name='act_update'),
+    # проекты
+    re_path(r'^projects/$', crmapp.projects_view, name='projects'),
+    re_path(r'^project/create/(?P<contract_pk>\d+)$', crmapp.project_create_view, name='project_create'),
+    re_path(r'^project/read/(?P<project_pk>\d+)$', crmapp.project_read_view, name='project_read'),
+    re_path(r'^project/update/(?P<project_pk>\d+)$', crmapp.project_update_view, name='project_update'),
+    # задачи
 ]

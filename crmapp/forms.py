@@ -1,5 +1,5 @@
 from django import forms
-from crmapp.models import Partner, Firm, Services, Contract, Invoice, Act
+from crmapp.models import Partner, Firm, Services, Contract, Invoice, Act, Project, Task
 
 
 class PartnerCreateForm(forms.ModelForm):
@@ -78,3 +78,27 @@ class ActCreateForm(forms.ModelForm):
             field.widget.attrs['class'] = 'form-control'
             if field_name == 'vat' or field_name == 'price_vat':
                 field.widget.attrs['readonly'] = ''
+
+
+class ProjectCreateFrom(forms.ModelForm):
+    class Meta:
+        model = Project
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
+            if field_name == 'date_create':
+                field.widget.attrs['readonly'] = ''
+
+
+class TaskCreateFrom(forms.ModelForm):
+    class Meta:
+        model = Task
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'

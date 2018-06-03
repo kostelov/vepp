@@ -3,6 +3,7 @@ from crmapp.management.commands import log_config
 from crmapp.management.commands.loger import Log
 
 from django.db import models
+from django.conf import settings
 
 from decimal import *
 from datetime import datetime
@@ -223,3 +224,52 @@ class Act(models.Model):
             price_vat=contract.cost_vat
         )
         return act
+
+
+class Project(models.Model):
+    name = models.CharField(verbose_name='назва проекту', max_length=100, blank=True)
+    date_create = models.DateField(verbose_name='дата створення',
+                                   default=datetime.strftime(datetime.today(), '%Y-%m-%d'))
+    date_end = models.DateField(verbose_name='дата виконання')
+    date_change = models.DateTimeField(verbose_name='змінено', auto_now=True)
+    contract = models.ForeignKey(Contract, verbose_name='договір', related_name='project',
+                                 on_delete=models.PROTECT)
+    status = models.CharField(verbose_name='прогрес', max_length=3, default='0')
+    is_finished = models.BooleanField(verbose_name='завершено', blank=False)
+
+    def __str__(self):
+        return self.name
+
+    @staticmethod
+    def project_create(contract):
+        project = Project(
+            name=contract.client.short_name,
+            date_create=datetime.strftime(datetime.today(), '%d.%m.%Y'),
+            date_end=datetime.strftime(datetime.today(), '%d.%m.%Y'),
+            contract=Contract.objects.filter(pk=int(contract.pk)).first(),
+            status=0,
+            is_finished=False,
+        )
+        return project
+
+class Task(models.Model):
+    DONE = 'done'
+    UNDERWAY = 'underway'
+    STATUS = (
+        (None, 'Нове'),
+        (UNDERWAY, 'Виконується'),
+        (DONE, 'Завершено'),
+    )
+    project = models.ForeignKey(Project, verbose_name='проект', related_name='task_in_project',
+                                on_delete=models.PROTECT)
+    date_create = models.DateField(verbose_name='дата створення',
+                                   default=datetime.strftime(datetime.today(), '%Y-%m-%d'))
+    date_end = models.DateField(verbose_name='дата виконання')
+    date_change = models.DateTimeField(verbose_name='змінено', auto_now=True)
+    worker = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='виконавець', related_name='task',
+                               on_delete=models.PROTECT)
+    service = models.ForeignKey(Services, on_delete=models.PROTECT)
+    status = models.CharField(max_length=15, choices=STATUS, blank=True)
+
+    def __str__(self):
+        return self.service, self.worker
