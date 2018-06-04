@@ -651,3 +651,30 @@ def project_update_view(request, project_pk):
     }
 
     return render(request, 'crmapp/project_update.html', context)
+
+
+@login_required
+@user_passes_test(lambda user: user.is_assistant or user.is_superuser or user.is_dir)
+def task_create_view(request, project_pk):
+    title = 'Завдання'
+    project = get_object_or_404(Project, pk=project_pk)
+    # формируем задачу в вібраном проекте без добавления в бд и передаем в форму
+    task = Task.task_create(project)
+    if request.method == 'POST':
+        form = TaskCreateFrom(request.POST, instance=task)
+        if form.is_valid():
+            try:
+                form.save()
+                return HttpResponseRedirect(reverse('crm:project_read', kwargs={'project_pk': project.pk}))
+            except Exception as e:
+                pass
+    else:
+        form = ProjectCreateFrom(instance=task)
+
+    context = {
+        'title': title,
+        'form': form,
+        'object': task,
+    }
+
+    return render(request, 'crmapp/task_update.html', context)

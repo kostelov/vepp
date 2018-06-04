@@ -252,6 +252,7 @@ class Project(models.Model):
         )
         return project
 
+
 class Task(models.Model):
     DONE = 'done'
     UNDERWAY = 'underway'
@@ -273,3 +274,12 @@ class Task(models.Model):
 
     def __str__(self):
         return self.service, self.worker
+
+    @staticmethod
+    def task_create(project):
+        task = Task(
+            project=Project.objects.filter(pk=int(project.pk)).first(),
+            date_create=datetime.strftime(datetime.today(), '%d.%m.%Y'),
+            date_end=datetime.strftime(datetime.today(), '%d.%m.%Y'),
+        )
+        return task
