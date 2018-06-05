@@ -8,19 +8,11 @@
 {% block container %}
 <div class="row">
     <div class="col-lg-6">
-        {% if request.resolver_match.url_name == 'project_create' %}
-        <a href="{% url 'crm:contract_read' object.contract.pk %}">
-            <button class="btn btn-default" type="button">
-                Назад
-            </button>
-        </a>
-        {% else %}
         <a href="{% url 'crm:projects' %}">
             <button class="btn btn-default" type="button">
                 Назад
             </button>
         </a>
-        {% endif %}
     </div>
 </div>
 <br>
@@ -31,7 +23,7 @@
             <div class="panel-body">
                 <div class="form">
                     <div class="form">
-                        {% include 'crmapp/includes/inc_form_project_update.html' %}
+                        {% include 'crmapp/includes/inc_form_task_update.html' %}
                     </div>
                 </div>
             </div>

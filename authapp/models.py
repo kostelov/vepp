@@ -13,4 +13,4 @@ class ProjectUser(AbstractUser):
     is_client = models.BooleanField(verbose_name='клієнт', default=False)
 
     def __str__(self):
-        return self.username
+        return self.last_name

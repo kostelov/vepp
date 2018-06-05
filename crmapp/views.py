@@ -8,7 +8,7 @@ from django.http import JsonResponse
 from authapp.models import ProjectUser
 from authapp.forms import UserUpdateForm
 from crmapp.forms import PartnerCreateForm, FirmCreateForm, ServiceCreateForm, ContractCreateForm, InvoiceCreateForm, \
-    ActCreateForm, ProjectCreateFrom, TaskCreateFrom
+    ActCreateForm, ProjectCreateForm, TaskCreateForm
 from crmapp.models import Bank, Partner, Firm, Services, Contract, Invoice, Act, Project, Task
 
 
@@ -574,13 +574,15 @@ def act_update_view(request, act_pk):
 
 @login_required
 @user_passes_test(lambda user: user.is_assistant or user.is_superuser or user.is_dir)
-def projects_view(request):
+def projects_view(request, project_pk=None):
     title = 'Проекти'
     projects = Project.objects.all().order_by('date_end')
+    tasks = Task.objects.all()
 
     context = {
         'title': title,
         'object_list': projects,
+        'task_list': tasks,
     }
 
     return render(request, 'crmapp/projects_list.html', context)
@@ -589,20 +591,20 @@ def projects_view(request):
 @login_required
 @user_passes_test(lambda user: user.is_assistant or user.is_superuser or user.is_dir)
 def project_create_view(request, contract_pk):
-    title = 'Проект'
+    title = 'Новий проект'
     contract = get_object_or_404(Contract, pk=contract_pk)
     # формируем проект на основании договора без добавления в бд и передаем в форму
     project = Project.project_create(contract)
     if request.method == 'POST':
-        form = ProjectCreateFrom(request.POST, instance=project)
+        form = ProjectCreateForm(request.POST, instance=project)
         if form.is_valid():
             try:
                 form.save()
-                return HttpResponseRedirect(reverse('crm:project_read', kwargs={'project_pk': project.pk}))
+                return HttpResponseRedirect(reverse('crm:contract_read', kwargs={'contract_pk': contract.pk}))
             except Exception as e:
                 pass
     else:
-        form = ProjectCreateFrom(instance=project)
+        form = ProjectCreateForm(instance=project)
 
     context = {
         'title': title,
@@ -613,19 +615,19 @@ def project_create_view(request, contract_pk):
     return render(request, 'crmapp/project_update.html', context)
 
 
-@login_required
-@user_passes_test(lambda user: user.is_assistant or user.is_superuser or user.is_dir)
-def project_read_view(request, project_pk):
-    project = get_object_or_404(Project, pk=project_pk)
-    dt = datetime.strftime(project.date_create, '%d.%m.%Y')
-    title = f'Проект №{project.pk} від {dt} р.'
-
-    context = {
-        'title': title,
-        'object': project,
-    }
-
-    return render(request, 'crmapp/project_detail.html', context)
+# @login_required
+# @user_passes_test(lambda user: user.is_assistant or user.is_superuser or user.is_dir)
+# def project_read_view(request, project_pk):
+#     project = get_object_or_404(Project, pk=project_pk)
+#     dt = datetime.strftime(project.date_create, '%d.%m.%Y')
+#     title = f'Проект №{project.pk} від {dt} р.'
+#
+#     context = {
+#         'title': title,
+#         'object': project,
+#     }
+#
+#     return render(request, 'crmapp/project_detail.html', context)
 
 
 @login_required
@@ -634,7 +636,7 @@ def project_update_view(request, project_pk):
     title = 'Редагувати проект'
     project = get_object_or_404(Project, pk=project_pk)
     if request.method == 'POST':
-        form = ProjectCreateFrom(request.POST, instance=project)
+        form = ProjectCreateForm(request.POST, instance=project)
         if form.is_valid():
             try:
                 form.save()
@@ -642,7 +644,7 @@ def project_update_view(request, project_pk):
             except Exception as e:
                 pass
     else:
-        form = ProjectCreateFrom(instance=project)
+        form = ProjectCreateForm(instance=project)
 
     context = {
         'title': title,
@@ -656,25 +658,53 @@ def project_update_view(request, project_pk):
 @login_required
 @user_passes_test(lambda user: user.is_assistant or user.is_superuser or user.is_dir)
 def task_create_view(request, project_pk):
-    title = 'Завдання'
+    title = 'Нове завдання'
     project = get_object_or_404(Project, pk=project_pk)
-    # формируем задачу в вібраном проекте без добавления в бд и передаем в форму
+    users = ProjectUser.objects.all().exclude(is_active=False)
+    # формируем задачу в выбраном проекте без добавления в бд и передаем в форму
     task = Task.task_create(project)
     if request.method == 'POST':
-        form = TaskCreateFrom(request.POST, instance=task)
+        form = TaskCreateForm(request.POST, instance=task)
         if form.is_valid():
             try:
                 form.save()
-                return HttpResponseRedirect(reverse('crm:project_read', kwargs={'project_pk': project.pk}))
+                return HttpResponseRedirect(reverse('crm:projects'))
             except Exception as e:
                 pass
     else:
-        form = ProjectCreateFrom(instance=task)
+        form = TaskCreateForm(instance=task, initial={'users': users})
 
     context = {
         'title': title,
         'form': form,
         'object': task,
+        'users': users,
+    }
+
+    return render(request, 'crmapp/task_update.html', context)
+
+
+@login_required
+@user_passes_test(lambda user: user.is_assistant or user.is_superuser or user.is_dir)
+def task_update_view(request, task_pk):
+    title = 'Редагувати завдання'
+    task = get_object_or_404(Task, pk=task_pk)
+    if request.method == 'POST':
+        form = TaskCreateForm(request.POST, instance=task)
+        if form.is_valid():
+            try:
+                form.save()
+                return HttpResponseRedirect(reverse('crm:projects'))
+            except Exception as e:
+                pass
+    else:
+        form = TaskCreateForm(instance=task)
+
+    context = {
+        'title': title,
+        'form': form,
+        'object': task,
+        # 'users': users,
     }
 
     return render(request, 'crmapp/task_update.html', context)

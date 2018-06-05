@@ -43,11 +43,11 @@ urlpatterns = [
     # проекты
     re_path(r'^projects/$', crmapp.projects_view, name='projects'),
     re_path(r'^project/create/(?P<contract_pk>\d+)$', crmapp.project_create_view, name='project_create'),
-    re_path(r'^project/read/(?P<project_pk>\d+)$', crmapp.project_read_view, name='project_read'),
+    # re_path(r'^project/read/(?P<project_pk>\d+)$', crmapp.project_read_view, name='project_read'),
     re_path(r'^project/update/(?P<project_pk>\d+)$', crmapp.project_update_view, name='project_update'),
     # задачи
     # re_path(r'^tasks/$', crmapp.tasks_view, name='tasks'),
     re_path(r'^task/create/(?P<project_pk>\d+)$', crmapp.task_create_view, name='task_create'),
     # re_path(r'^task/read/(?P<project_pk>\d+)$', crmapp.project_read_view, name='project_read'),
-    # re_path(r'^task/update/(?P<task_pk>\d+)$', crmapp.task_update_view, name='task_update'),
+    re_path(r'^task/update/(?P<task_pk>\d+)$', crmapp.task_update_view, name='task_update'),
 ]

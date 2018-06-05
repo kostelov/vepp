@@ -1,9 +1,11 @@
 import logging
 from crmapp.management.commands import log_config
 from crmapp.management.commands.loger import Log
+from authapp.models import ProjectUser
 
 from django.db import models
 from django.conf import settings
+from django.contrib.auth.models import User
 
 from decimal import *
 from datetime import datetime
@@ -84,6 +86,9 @@ class Firm(models.Model):
 
 class Services(models.Model):
     name = models.CharField(verbose_name='послуга/робота', max_length=100, unique=True)
+
+    def __str__(self):
+        return self.name
 
 
 class Contract(models.Model):
@@ -252,6 +257,12 @@ class Project(models.Model):
         )
         return project
 
+    @staticmethod
+    def get_tasks(projects):
+        for project in projects:
+            tasks = project.task_in_project.all()
+        return tasks
+
 
 class Task(models.Model):
     DONE = 'done'
@@ -269,11 +280,11 @@ class Task(models.Model):
     date_change = models.DateTimeField(verbose_name='змінено', auto_now=True)
     worker = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='виконавець', related_name='task',
                                on_delete=models.PROTECT)
-    service = models.ForeignKey(Services, on_delete=models.PROTECT)
-    status = models.CharField(max_length=15, choices=STATUS, blank=True)
+    service = models.ForeignKey(Services, verbose_name='робота', on_delete=models.PROTECT)
+    status = models.CharField(max_length=15, verbose_name='статус', choices=STATUS, blank=True)
 
     def __str__(self):
-        return self.service, self.worker
+        return str(self.pk)
 
     @staticmethod
     def task_create(project):

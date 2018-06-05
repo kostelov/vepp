@@ -80,7 +80,7 @@ class ActCreateForm(forms.ModelForm):
                 field.widget.attrs['readonly'] = ''
 
 
-class ProjectCreateFrom(forms.ModelForm):
+class ProjectCreateForm(forms.ModelForm):
     class Meta:
         model = Project
         fields = '__all__'
@@ -93,7 +93,7 @@ class ProjectCreateFrom(forms.ModelForm):
                 field.widget.attrs['readonly'] = ''
 
 
-class TaskCreateFrom(forms.ModelForm):
+class TaskCreateForm(forms.ModelForm):
     class Meta:
         model = Task
         fields = '__all__'

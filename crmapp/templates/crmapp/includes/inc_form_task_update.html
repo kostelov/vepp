@@ -2,9 +2,9 @@
     {% csrf_token %}
     <!--{{ form.as_p }}-->
     <div class="form-group">
-        <label class="control-label col-lg-2">{{ form.name.label_tag }}</label>
+        <label class="control-label col-lg-2">{{ form.project.label_tag }}</label>
         <div class="col-lg-4">
-            {{ form.name }}
+            {{ form.project }}
         </div>
     </div>
     <div class="form-group">
@@ -28,29 +28,41 @@
         </div>
     </div>
     <div class="form-group">
-        <label class="control-label col-lg-2">{{ form.contract.label_tag }}</label>
+        <label class="control-label col-lg-2">{{ form.worker.label_tag }}</label>
         <div class="col-lg-6">
-            {{ form.contract }}
+            {{ form.worker }}
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-lg-2">{{ form.service.label_tag }}</label>
+        <div class="col-lg-6">
+            {{ form.service }}
         </div>
     </div>
     <div class="form-group">
         <label class="control-label col-lg-2">{{ form.status.label_tag }}</label>
-        <div class="col-lg-2">
-            <div class="input-group m-bot15">
-                {{ form.status }}<span class="input-group-addon">%</span>
-            </div>
+        <div class="col-lg-6">
+            {{ form.status }}
         </div>
     </div>
-    <div class="form-group">
-        <label class="control-label col-lg-2">{{ form.is_finished.label_tag }}</label>
-        <div class="col-sm-9 icheck">
-            <div class="flat-green single-row">
-                <div class="radio">
-                    {{ form.is_finished }}
-                </div>
-            </div>
-        </div>
-    </div>
+    <!--<div class="form-group">-->
+        <!--<label class="control-label col-lg-2">{{ form.status.label_tag }}</label>-->
+        <!--<div class="col-lg-2">-->
+            <!--<div class="input-group m-bot15">-->
+                <!--{{ form.status }}<span class="input-group-addon">%</span>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="form-group">-->
+        <!--<label class="control-label col-lg-2">{{ form.is_finished.label_tag }}</label>-->
+        <!--<div class="col-sm-9 icheck">-->
+            <!--<div class="flat-green single-row">-->
+                <!--<div class="radio">-->
+                    <!--{{ form.is_finished }}-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
     <button class="btn btn-primary" type="submit">
         Зберегти
     </button>

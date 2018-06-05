@@ -21,62 +21,120 @@
     <br>
     <div class="row">
         <div class="col-lg-12">
+            {% for object in object_list %}
+            {% if not object.is_finished %}
             <section class="panel">
                 <header class="panel-heading">
-                    {{ title }}
+                    {{ object.name }}
+                    <span class="tools pull-right">
+                        <a class="fa fa-chevron-up" href="javascript:;"></a>
+                    </span>
                 </header>
-                <div class="panel-body" style="display: block;">
-                    <table class="table table-hover general-table">
-                        <thead>
-                        <tr>
-                            <th>Проект №</th>
-                            <th>Договір №</th>
-                            <th>Назва</th>
-                            <th>Дата створення</th>
-                            <th>Змінено</th>
-                            <th>Дата закінчення</th>
-                            <th>Прогрес</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for object in object_list %}
-                        <tr>
-                            <td>
-                                <a style="display: block; text-decoration: none;"
-                                   href="{% url 'crm:project_read' object.pk %}">{{ object.pk }}</a>
-                            </td>
-                            <td>{{ object.contract.number }}</td>
-                            <td>{{ object.name }}</td>
-                            <td><a style="display: block; text-decoration: none;"
-                                   href="{% url 'crm:project_read' object.pk %}">{{ object.date_create }}</a>
-                            </td>
-                            <td>{{ object.date_change }}</td>
-                            <td>{{ object.date_end }}</td>
-                            <td>
-                                <div class="progress">
-                                    <div class="progress-bar progress-bar-success" role="progressbar"
-                                         aria-valuenow="{{ object.status }}" aria-valuemin="0"
-                                         aria-valuemax="100" style="width: {{ object.status }}%;">
-                                        <!--<span class="sr-only">60% Complete</span>-->
-                                        {{ object.status }}%
+                <div class="panel-body" style="display: none;">
+                    <div class="col-lg-3">
+                        <ul class="p-info">
+                            <li>
+                                <div class="title">№ проекту</div>
+                                <div class="desk">{{ object.pk }}</div>
+                            </li>
+                            <li>
+                                <div class="title">№ договору</div>
+                                <div class="desk">{{ object.contract.number }}</div>
+                            </li>
+                            <li>
+                                <div class="title">Дата створення</div>
+                                <div class="desk">{{ object.date_create }}</div>
+                            </li>
+                            <li>
+                                <div class="title">Змінено</div>
+                                <div class="desk">{{ object.date_change }}</div>
+                            </li>
+                            <li>
+                                <div class="title">Дата завершення</div>
+                                <div class="desk">{{ object.date_end }}</div>
+                            </li>
+                            <li>
+                                <div class="title">Виконано</div>
+                                <div class="desk">
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-success" role="progressbar"
+                                             aria-valuenow="{{ object.status }}" aria-valuemin="0"
+                                             aria-valuemax="100" style="width: {{ object.status }}%;">
+                                            <!--<span class="sr-only">60% Complete</span>-->
+                                            {{ object.status }}%
+                                        </div>
                                     </div>
                                 </div>
-                            </td>
-                            <!--<td>-->
-                                <!--{% if object.is_paid %}-->
-                                <!--<i class="fa fa-check fa-lg" aria-hidden="true" title="Так"></i>-->
-                                <!--{% else %}-->
-                                <!--<i class="fa fa-times fa-lg" aria-hidden="true" title="Ні"></i>-->
-                                <!--{% endif %}-->
-                            <!--</td>-->
-                        </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-1">
+                        <ul class="p-info">
+                            <li>
+                                <a href="{% url 'crm:project_update' object.pk %}">
+                                    <button class="btn btn-default" type="button" title="Редагувати проект">
+                                        <i class="fa fa-pencil"></i>
+                                    </button>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'crm:task_create' object.pk %}">
+                                    <button class="btn btn-default" type="button" title="Нове завдання">
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="panel-body" style="display: block;">
+                            <table class="table table-hover general-table">
+                                <thead>
+                                <tr>
+                                    <th>№</th>
+                                    <th>Виконавець</th>
+                                    <th>Робота</th>
+                                    <th>Дата початку</th>
+                                    <th>Строк</th>
+                                    <th>Статус</th>
+                                    <th>&nbsp;</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for task in task_list %}
+                                    {% if object.pk ==  task.project.pk %}
+                                    <tr>
+                                        <td>{{ task.pk }}</td>
+                                        <td>{{ task.worker }}</td>
+                                        <td>{{ task.service }}</td>
+                                        <td>{{ task.date_create }}</td>
+                                        <td>{{ task.date_end }}</td>
+                                        {% if not task.status %}
+                                            <td><span class="label label-danger label-mini">Нове</span></td>
+                                        {% elif task.status == 'underway' %}
+                                            <td><span class="label label-primary label-mini">Виконується</span></td>
+                                        {% elif task.status == 'done' %}
+                                            <td><span class="label label-success label-mini">Завершено</span></td>
+                                        {% endif %}
+                                        <td>
+                                            <a href="{% url 'crm:task_update' task.pk %}">
+                                                <button class="btn btn-default btn-xs" type="button" title="Редагувати завдання">
+                                                    <i class="fa fa-pencil"></i>
+                                                </button>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    {% endif %}
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </section>
+            {% endif %}
+            {% endfor %}
         </div>
     </div>
 </div>
 {% endblock %}
-
